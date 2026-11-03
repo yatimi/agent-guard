@@ -22,7 +22,7 @@ for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, stop);
 const deadline = setTimeout(stop, 180000);
 try {
   let port;
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 1200; i++) {
     if (chromeError) throw chromeError;
     if (chrome.exitCode !== null || chrome.signalCode !== null || interrupted) throw new Error(`Chrome stopped; inspect ${output}/chrome.log`);
     try { port = (await readFile(join(output, 'DevToolsActivePort'), 'utf8')).split('\n')[0]; } catch (e) { if (e.code !== 'ENOENT') throw e; }
@@ -38,6 +38,10 @@ try {
     current = null; if (code !== 0 || interrupted) throw new Error(`Browser check failed: ${script}`);
   }
   console.log(`Browser checks passed; disposable profile/logs: ${output}`);
+} catch (error) {
+  const diagnostic = await readFile(join(output, 'chrome.log'), 'utf8').catch(() => 'No Chrome log available.');
+  console.error(`Chrome launch: ${executable}\n${diagnostic.slice(-12000)}`);
+  throw error;
 } finally {
   clearTimeout(deadline); current?.kill('SIGTERM');
   if (chrome.exitCode === null && chrome.signalCode === null) await new Promise(resolve => {

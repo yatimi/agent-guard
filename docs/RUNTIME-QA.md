@@ -27,6 +27,10 @@ Source review found and closed three test-harness gaps: accepting any error as k
 
 Development experiments exposed harness assumptions rather than a newly found contract bypass: deployment refunds can arrive after the SDK's initial transaction result; height fast-forward did not establish the intended day change; and unused gas can augment a callback's static allocation. These are retained in the report's development notes. The final run passed five tests in approximately 30 seconds after compilation.
 
+## Fresh judge builds
+
+The artifact hashes above identify the historical recorded run. Current `npm run build:contract` writes a separate `target/contract-build.json`; the runtime runner verifies the fresh bytes against that record and the reviewed source manifest. Embedded compiler paths can change WASM bytes between macOS and Linux. New results record their actual artifact hash and whether it matches the deployed artifact; the existing public recording and live deployment pin are not relabeled. [Clean setup and CI](JUDGE.md).
+
 ## Key lifecycle
 
 The owner can revoke the restricted key with a DeleteKey action on the owner account. Subsequent signing with that key is rejected by the protocol. Adding a different key does not update this vault's immutable pinned key. Replacement requires a deliberately reviewed new vault/policy or contract migration, with pending payments reconciled first. No rotation or revocation was performed on the user's actual keys.
