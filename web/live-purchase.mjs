@@ -43,6 +43,10 @@ const errors = {
   VAULT_BUDGET_EXHAUSTED: 'The vault’s spending budget is exhausted. No new payment was signed.',
   AN_EARLIER_PAYMENT_NEEDS_RECONCILIATION: 'An earlier purchase has an unresolved payment. Reopen that purchase and check its original transaction.',
   TRANSACTION_NOT_FINAL_YET: 'The transaction is not final yet. Check it again later using the same purchase.',
+  PAYMENT_NOT_SETTLED: 'The saved fee transaction has no verified successful settlement. This does not establish a refund. Keep this purchase and have the vault owner inspect its receipts.',
+  PAYMENT_RECEIPT_FAILED: 'A receipt failed in the saved fee transaction. Some actions may already have succeeded. Do not send another fee; the vault owner must inspect the receipt outcomes.',
+  SETTLEMENT_EVENT_MISMATCH: 'The fee receipts do not match the expected settlement. Payment and delivery remain unconfirmed; the vault owner must inspect the saved transaction.',
+  RPC_INVALID_VIEW_RESULT: 'The RPC returned an invalid vault status. Payment was stopped; restore a valid status response before starting a new purchase.',
 };
 function element(tag, text) { const item = document.createElement(tag); item.textContent = text; return item; }
 function link(text, url) { const item = element('a', text); item.href = url; item.target = '_blank'; item.rel = 'noreferrer'; return item; }
@@ -96,7 +100,9 @@ function render(run) {
   status.textContent = run.recoveryRequired ? 'Server restarted · saved purchase needs checking' : title;
   message.textContent = run.recoveryRequired
     ? 'Continue from the saved journal. Recovery checks the original payment or safely stops a run interrupted before payment.'
-    : errors[run.error] || guidance;
+    : errors[run.error] || (run.state === 'blocked' && /^(MODEL_|Model )/.test(run.error)
+      ? 'The AI service did not return a usable proposal. No payment was signed. Review the service error before explicitly starting a new purchase; the AI attempt may still have incurred a charge.'
+      : guidance);
   inspection = null; buying(['completed', 'blocked', 'paid_incomplete'].includes(run.state));
   resume.hidden = true;
   if (recoveryTarget) recover('Open earlier purchase · no new transfer');

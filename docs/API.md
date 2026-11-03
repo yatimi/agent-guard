@@ -40,6 +40,8 @@ The browser saves `{id, scenario, inspectionId}` before POST, with a per-ID reco
 
 Signed bytes/hash are persisted before broadcast and excluded from the public API. FINAL settlement verifies signer/key/receiver/action, successful receipt outcomes and matching reservation/settlement events. The report stays hidden until delivery is verified. Exact model proposals are visible as text; AI draft prose is separate from deterministic facts and requires human review. New runs retain a timestamped vault preflight observation, not a live balance feed.
 
+AI and RPC JSON bodies are bounded at 2 MB; malformed bodies and vault-view JSON return sanitized errors. Unused HTTP error bodies are cancelled. AI completion errors retain their conservative reservation and never retry automatically. Fee receipt failures remain `needs_attention`; they do not establish a refund or enable another purchase. [Failure matrix and stop/resume runbook](FAILURE-QA.md).
+
 Legacy snapshot journals remain readable/recoverable, but production admission requires a new incident inspection. The supplier, quote and journal remain trusted local components; the contract does not commit the report hash or attest delivery. [Incident QA](INCIDENT-QA.md) and [earlier recovery checks](RECOVERY-QA.md) distinguish live, simulated and historical evidence.
 
 ## Zero-credit HTTP failure check

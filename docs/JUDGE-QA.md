@@ -1,6 +1,12 @@
 <!-- Author: Tommy -->
 # Judge reproduction checks
 
+## Current failure-hardening follow-up
+
+On 2026-11-03, the reviewed follow-up passed 98 JavaScript tests, both 15-response/14-control model replays, three incident replays, 28 Chrome live-flow fixtures and six recorded-demo groups. [Failure scope and recovery runbook](FAILURE-QA.md). Four read-only review roles covered regression, security, reliability and contracts; unused error-body cancellation and timeout-fixture margins were fixed and re-reviewed. This is source review, not an independent audit. Rust/deployment and historical response files are unchanged. The model replays now explicitly identify their exact archived AI transport.
+
+## Original clean-checkout milestone
+
 Verified locally on 2026-11-03, Node 26.3.0 / macOS arm64. The default `demo`/`dev` path is recorded and offline; `dev:live` remains explicit and separate.
 
 - 77 JavaScript tests passed, including demo mutation refusal, no client-network/signing capability, index aliases, no journal writes and fresh-build provenance tampering.

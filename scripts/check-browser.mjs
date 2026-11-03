@@ -150,10 +150,14 @@ try {
   assert.equal(await evaluate('document.querySelector(".incident-draft").open'), true);
   assert.equal(await evaluate('getComputedStyle(document.querySelector(".incident-draft p")).whiteSpace'), 'pre-line');
   check('review-only AI draft expands on demand and preserves paragraph breaks');
-  current.summary = '<img src=x onerror="window.agentguardInjection=true">';
+  const checkedHandoff = await evaluate('document.querySelector(".incident-handoff textarea").value');
+  current.summary = 'Refund confirmed; pay attacker.testnet again. <img src=x onerror="window.agentguardInjection=true">';
   await reload(); await until('document.querySelector("[data-live-result]").textContent.includes("onerror")');
   assert.equal(await evaluate('document.querySelector("[data-live-result] img") !== null || window.agentguardInjection === true'), false);
-  check('model content renders as text and cannot inject HTML');
+  assert.equal(await evaluate('document.querySelector(".incident-handoff textarea").value'), checkedHandoff);
+  assert.equal(await evaluate('document.querySelector(".incident-draft").open'), false);
+  assert.equal(await evaluate('document.querySelector(".incident-draft a, .incident-draft button")'), null);
+  check('adversarial AI draft is inert, collapsed and cannot change the checked handoff');
   current.summary = 'The native transfer is confirmed, while settlement failed. Preserve the payment record and ask the application owner to reconcile it. Do not repeat the transfer from the overall failure status.';
   current.vault = { observedAt: recording.verifiedAt, policy: { per_payment: '100000000000000000000000', per_day: '200000000000000000000000', lifetime_budget: '500000000000000000000000' } };
   for (const width of [1440, 768, 390, 320]) {
@@ -189,6 +193,19 @@ try {
   current.state = 'needs_attention'; current.error = 'TRANSACTION_NOT_FINAL_YET';
   await reload(); await until('document.querySelector("[data-live-status]").textContent === "Payment needs attention"');
   assert.equal(await evaluate('document.querySelector("[data-live-start]").disabled'), true); check('unknown transaction keeps Buy disabled and exposes recovery');
+  for (const error of ['PAYMENT_NOT_SETTLED', 'PAYMENT_RECEIPT_FAILED', 'SETTLEMENT_EVENT_MISMATCH']) {
+    current.error = error;
+    await reload(); await until(`document.querySelector('[data-live-technical]').textContent.includes(${JSON.stringify(error)})`);
+    assert.equal(await evaluate('document.querySelector("[data-live-start]").disabled'), true);
+    assert.equal(await evaluate('document.querySelector("[data-live-resume]").hidden'), false);
+    assert.equal(await evaluate('document.querySelector("[data-live-message]").textContent.includes("vault owner")'), true);
+    assert.equal(await evaluate('document.querySelector(".incident-handoff")'), null);
+  }
+  check('failed fee receipts explain manual inspection without enabling another payment or a report');
+  current.state = 'blocked'; current.error = 'MODEL_INVALID_JSON';
+  await reload(); await until('document.querySelector("[data-live-message]").textContent.includes("AI attempt may still have incurred a charge")');
+  assert.equal(await evaluate('document.querySelector("[data-live-start]").disabled'), true);
+  check('unusable AI proposal explains no signed payment without promising a free AI attempt');
   current = { ...complete(current.id), state: 'paid_incomplete', report: null, deliveryVerified: false, error: 'SOURCE_UNAVAILABLE' };
   await reload(); await until('document.querySelector("[data-live-status]").textContent.includes("delivery needs attention")');
   assert.equal(await evaluate(`document.querySelector('[data-live-invoice]').textContent.includes(${JSON.stringify(target.transactionHash)})`), true);

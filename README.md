@@ -24,7 +24,7 @@ AgentGuard puts spending rules in a NEAR contract. The agent gets a key that can
 - Prevents an accepted request from paying twice, including after a failed transfer.
 - Keeps administrative controls out of the agent's hands.
 
-The contract is deployed at **`guard.yatimi.testnet`**. Its deployed WASM was matched to the recorded Mac build; fresh builds have a separate provenance record. **Eight real-network checks passed**, alongside **20 Rust unit tests**, **86 JavaScript tests**, and **five isolated WASM runtime tests**. [Runtime evidence and injected-case boundaries](docs/RUNTIME-QA.md).
+The contract is deployed at **`guard.yatimi.testnet`**. Its deployed WASM was matched to the recorded Mac build; fresh builds have a separate provenance record. **Eight real-network checks passed**, alongside **20 Rust unit tests**, **98 JavaScript tests**, and **five isolated WASM runtime tests**. [Runtime evidence and injected-case boundaries](docs/RUNTIME-QA.md).
 
 [Inspect a successful payment](https://explorer.testnet.near.org/transactions/SW9ntYJ5oRY6QsDwzFdSY61Cc5WPgtSAkeJaz3umN44) · [Inspect a blocked recipient](https://explorer.testnet.near.org/transactions/3ZL2bZoLX3NoanvmfKRcCu5NxaD1ayfPfLArSCz4geFe)
 
@@ -62,7 +62,9 @@ Open **http://127.0.0.1:4174**. `npm run dev` starts the same safe recorded demo
 
 The demo serves only local public recordings and static assets. It recomputes incident facts from receipts, refuses live API mutations and neither imports the wallet/model clients nor reads `.env` or `.local`. Sandbox receipt hashes are not linked to public explorers. Downloads retain recorded-source provenance. Simulation and recorded evidence do not claim a fresh chain or model run.
 
-`npm run verify` runs 86 JS tests, separate 15-response historical and current-incident model replays with 14 validator controls each, and three incident-evidence replays. No network access or spending is needed, except loopback HTTP between local test processes. [Judge guide, optional checks and CI boundaries](docs/JUDGE.md).
+`npm run verify` runs 98 JS tests, separate 15-response historical and current-incident model replays with 14 validator controls each, and three incident-evidence replays. No network access or spending is needed, except loopback HTTP between local test processes. [Judge guide, optional checks and CI boundaries](docs/JUDGE.md).
+
+AI/RPC failures stop safely, unresolved fee receipts block another payment, and hostile AI drafts cannot change the checked support handoff. [Failure checks and recovery runbook](docs/FAILURE-QA.md). Historical model replays use the exact archived AI transport; they do not claim a new live evaluation of the hardened client.
 
 Optional browser checks (installed Chrome/Chromium): `npm run test:browser`. It creates and closes its own temporary profile, tests both interfaces and stores screenshots only outside the checkout. No browser package is installed.
 

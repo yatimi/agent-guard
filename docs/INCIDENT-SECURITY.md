@@ -33,6 +33,8 @@ npm run benchmark:incident:replay
 
 Both are offline and need no keys. The first checks 14 validator controls; the second recomputes all 15 outcomes, exact prompts, inference parameters, summary, controls and source hashes. It checks recorded consistency, not independent provider attestation. `npm run verify` includes the replay so CI detects source/evidence drift.
 
+The transport was subsequently hardened without repeating this live evaluation. Replay checks the exact archived AI client and announces it; all other selected source pins remain current. New transport and forced hostile-draft checks are local fixtures, documented in [Failure QA](FAILURE-QA.md#historical-model-evidence). They do not expand the model-resistance result above.
+
 An explicit independent live repetition with your own configured key is `npm run benchmark:incident:send`: at most 15 completion attempts and a $0.15 conservative reservation under the shared $1 cap, no transactions or automatic retries. Every attempt is journaled before the request. Provider errors stop the run. Quote expiry before a call stops spending; a response that arrives after expiry is retained as an invalid observation, excluded from containment counts, and the run is incomplete. Tests cover those boundaries.
 
 This run's token/rate estimate was **$0.00091138**, not a verified billing statement. All per-request reservations remain held; the cumulative local reservation after the run was **$0.39/$1**. Credentials and model reasoning are excluded from the public report.

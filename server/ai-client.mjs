@@ -3,24 +3,31 @@ import { join } from 'node:path';
 import { mkdir } from 'node:fs/promises';
 import { withFileLock } from './file-lock.mjs';
 import { readJson, writeJson } from './json-file.mjs';
+import { readHttpJson } from './http-json.mjs';
 
 export const inferenceParameters = Object.freeze({ max_tokens: 768, temperature: 0, reasoning_effort: 'low', thinking_token_budget: 64 });
 
 export class AiClient {
-  constructor({ apiKey, stateDirectory, endpoint = 'https://cloud-api.near.ai/v1', model = 'z-ai/glm-5.3-flash', timeoutMs = 45000 }) {
+  constructor({ apiKey, stateDirectory, endpoint = 'https://cloud-api.near.ai/v1', model = 'z-ai/glm-5.3-flash', timeoutMs = 45000, maxResponseBytes = 2000000 }) {
     this.apiKey = apiKey?.trim();
     this.stateDirectory = stateDirectory;
     this.endpoint = endpoint;
     this.model = model;
     this.timeoutMs = timeoutMs;
+    this.maxResponseBytes = maxResponseBytes;
   }
 
   async complete({ messages, tools, purpose }) {
     if (!this.apiKey) throw new Error('Set NEAR_AI_API_KEY in your local .env.');
     const headers = { Authorization: `Bearer ${this.apiKey}`, 'Content-Type': 'application/json' };
     const catalogResponse = await fetch(`${this.endpoint}/models`, { headers, redirect: 'error', signal: AbortSignal.timeout(this.timeoutMs) });
-    if (!catalogResponse.ok) throw new Error(`Model catalog HTTP ${catalogResponse.status}`);
-    const model = (await catalogResponse.json()).data?.find(item => item.id === this.model);
+    if (!catalogResponse.ok) {
+      await catalogResponse.body?.cancel().catch(() => {});
+      throw new Error(`Model catalog HTTP ${catalogResponse.status}`);
+    }
+    const catalog = await readHttpJson(catalogResponse, { maxBytes: this.maxResponseBytes, prefix: 'MODEL_CATALOG' });
+    if (!Array.isArray(catalog.data)) throw new Error('MODEL_CATALOG_INVALID_RESPONSE');
+    const model = catalog.data.find(item => item?.id === this.model);
     if (!model || model.is_ready !== true || (tools && !model.supported_features?.includes('tools'))) throw new Error('Configured model is not ready for this operation.');
     const prices = [model.pricing?.prompt, model.pricing?.completion, model.pricing?.request];
     if (prices.some(value => typeof value !== 'string' || !value.trim())) throw new Error('Model pricing is unavailable.');
@@ -53,19 +60,30 @@ export class AiClient {
       }
       entry.httpStatus = response.status;
       if (!response.ok) {
+        await response.body?.cancel().catch(() => {});
         entry.state = 'provider-error-reservation-held';
         await writeJson(ledgerPath, ledger);
         throw new Error(`Model HTTP ${response.status}. No automatic retry was made.`);
       }
-      const result = await response.json();
-      const message = result.choices?.[0]?.message;
-      if (!message) throw new Error('Model returned no message.');
+      let result, message;
+      try {
+        result = await readHttpJson(response, { maxBytes: this.maxResponseBytes, prefix: 'MODEL' });
+        message = result.choices?.[0]?.message;
+        if (!message || typeof message !== 'object' || Array.isArray(message)
+          || (message.content != null && typeof message.content !== 'string')
+          || (message.tool_calls != null && !Array.isArray(message.tool_calls))) throw new Error('MODEL_INVALID_RESPONSE');
+      } catch (error) {
+        entry.state = 'invalid-provider-response-reservation-held';
+        await writeJson(ledgerPath, ledger);
+        throw error;
+      }
       const usage = result.usage ?? {};
       entry.state = 'completed-reservation-held';
-      entry.promptTokens = usage.prompt_tokens ?? null;
-      entry.completionTokens = usage.completion_tokens ?? null;
-      entry.estimatedCostUsd = Number.isSafeInteger(usage.prompt_tokens) && Number.isSafeInteger(usage.completion_tokens)
-        ? usage.prompt_tokens * rates[0] + usage.completion_tokens * rates[1] + rates[2] : null;
+      const tokens = value => Number.isSafeInteger(value) && value >= 0 ? value : null;
+      entry.promptTokens = tokens(usage.prompt_tokens);
+      entry.completionTokens = tokens(usage.completion_tokens);
+      entry.estimatedCostUsd = entry.promptTokens !== null && entry.completionTokens !== null
+        ? entry.promptTokens * rates[0] + entry.completionTokens * rates[1] + rates[2] : null;
       await writeJson(ledgerPath, ledger);
       // Never expose or persist reasoning_content or authentication headers.
       return { model: this.model, content: typeof message.content === 'string' ? message.content.slice(0, 8000) : '',

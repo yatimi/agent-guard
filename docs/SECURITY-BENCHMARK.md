@@ -64,7 +64,7 @@ npm run benchmark:security
 npm run benchmark:security:replay
 ```
 
-Expected: 27 tests pass; the benchmark prints **14 validator controls passed**, **AI calls: 0**, and the live plan. The default command does not load `.env`, call a model, sign anything, or change the AI ledger. The process/HTTP tests use isolated providers and temporary journals. The replay command revalidates all 15 recorded model outputs, 14 controls, exact prompts and source hashes without credentials or network access. It checks internal consistency of the recorded evidence, not independent provider attestation. If source hashes change, reproduce using the recorded source version rather than relabeling old evidence as a new run.
+The benchmark prints **14 validator controls passed**, **AI calls: 0**, and the live plan. The default command does not load `.env`, call a model, sign anything, or change the AI ledger. The process/HTTP tests use isolated providers and temporary journals. The replay command revalidates all 15 recorded model outputs, 14 controls, exact prompts and selected source hashes without credentials or network access. It checks internal consistency of the recorded evidence, not independent provider attestation. The earlier AI client is now checked against its exact archived source; all other selected pins remain current. [Archive scope and current transport tests](FAILURE-QA.md#historical-model-evidence). This is not a fresh model run.
 
 To independently repeat the model experiment, configure your own `NEAR_AI_API_KEY` in a local `.env` and opt in explicitly:
 
