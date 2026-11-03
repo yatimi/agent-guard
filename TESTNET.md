@@ -38,3 +38,7 @@ Amounts in the contract API are decimal strings of yoctoNEAR, where 1 NEAR = 10^
 - Transfer to a nonexistent named account: failed transfer returns principal, callback restores budget and accepted nonce remains consumed.
 
 Save public transaction hashes, receipt outcomes, before/after state and compiler/artifact hashes. Do not save private key material or personal submission details. Update the UI only after it can label live and simulated results accurately.
+
+## Local runtime follow-up
+
+Failed native transfers and competing payments are now verified in a disposable local NEAR Sandbox using the unchanged compiled contract. Key allowance and revocation, an explicitly patched previous-day bucket, and a separate gas-starved callback artifact are also covered. These do not spend or modify this configured testnet deployment. See [RUNTIME-QA.md](docs/RUNTIME-QA.md) and [runtime setup](runtime-tests/README.md) for exact scope and reproducible commands.

@@ -8,13 +8,15 @@ import { randomUUID, createHash } from 'node:crypto';
 import { PurchaseWorkflow } from '../server/purchase-workflow.mjs';
 import { receiptFixture } from './receipt-fixture.mjs';
 
-async function fixture(t, { unknown = false, invalidProposal = false, summaryFailure = false } = {}) {
+async function fixture(t, { unknown = false, invalidProposal = false, summaryFailure = false, afterProposal = () => {} } = {}) {
   const directory = await mkdtemp(join(tmpdir(), 'agentguard-workflow-')); t.after(() => rm(directory, { recursive: true, force: true }));
   const config = { network: 'testnet', owner: 'owner.testnet', agentPublicKey: 'agent', vault: 'vault.testnet', supplier: 'supplier.testnet' };
   let signed = 0, broadcast = 0, calls = 0, payment;
-  const state = { owner: config.owner, policy: { agent_key: 'agent', recipients: [config.supplier], per_payment: '100000000000000000000000', lifetime_budget: '500000000000000000000000' }, next_nonce: '2', total_spent: '0', pending: null, paused: false };
+  const state = { owner: config.owner, policy: { agent_key: 'agent', recipients: [config.supplier], per_payment: '100000000000000000000000', per_day: '200000000000000000000000', lifetime_budget: '500000000000000000000000' }, next_nonce: '2', daily_spent: '0', total_spent: '0', pending: null, paused: false };
+  let collected = 0;
+  const account = { code_hash: 'BC9G5oZ61QQXi87HNmCYTwGSzb3zojE5VBybwbPNgr4d', amount: '6500000000000000000000000', storage_usage: 1000 };
   const rpc = {
-    query: async args => args.request_type === 'view_access_key' ? { permission: { FunctionCall: { receiver_id: config.vault, method_names: ['pay'], allowance: '100000000000000000000000' } } } : { code_hash: 'BC9G5oZ61QQXi87HNmCYTwGSzb3zojE5VBybwbPNgr4d', amount: '6500000000000000000000000' },
+    query: async args => args.request_type === 'view_access_key' ? { permission: { FunctionCall: { receiver_id: config.vault, method_names: ['pay'], allowance: '100000000000000000000000' } } } : args.account_id === config.vault ? account : { amount: '6500000000000000000000000' },
     view: async () => state,
     call: async method => {
       if (method === 'broadcast_tx_commit') { broadcast++; if (unknown) throw new Error('timeout'); return {}; }
@@ -25,16 +27,17 @@ async function fixture(t, { unknown = false, invalidProposal = false, summaryFai
   const dataset = { title: 'NEAR Mainnet Pulse', metrics: {}, limitations: [], blocks: [] };
   dataset.sha256 = createHash('sha256').update(JSON.stringify(dataset)).digest('hex');
   const workflow = new PurchaseWorkflow({ config, rpc, directory,
-    supplier: { collect: async () => dataset },
+    supplier: { collect: async () => { collected++; return dataset; } },
     wallet: { sign: async (method, args) => { signed++; payment = { encoded: 'signed-bytes', hash: 'known-hash', argsText: JSON.stringify(args) }; return payment; } },
     ai: { complete: async request => {
       calls++;
       if (!request.tools) { if (summaryFailure) throw new Error('model timeout'); return { content: 'Six blocks only.' }; }
       const quote = JSON.parse(request.messages[1].content.split('Owner-approved quote: ')[1].split('\n')[0]);
+      afterProposal(state, account);
       return { model: 'model', usage: {}, toolCalls: [{ type: 'function', function: { name: 'propose_payment', arguments: JSON.stringify({ recipient: invalidProposal ? 'attacker.testnet' : quote.recipient, amount_yocto: quote.amountYocto, invoice_id: quote.id }) } }] };
     } },
   });
-  return { workflow, counts: () => ({ signed, broadcast, calls }), resolve: () => { unknown = false; } };
+  return { workflow, state, account, collected: () => collected, counts: () => ({ signed, broadcast, calls }), resolve: () => { unknown = false; } };
 }
 async function settled(workflow, id) {
   for (let i = 0; i < 100; i++) {
@@ -48,6 +51,8 @@ test('repeated request and reopening a completed run never sign twice', async t 
   const f = await fixture(t), id = randomUUID();
   await f.workflow.create(id, 'purchase'); await f.workflow.create(id, 'purchase');
   const run = await settled(f.workflow, id); assert.equal(run.state, 'completed');
+  assert.equal(run.vault.policy.per_day, '200000000000000000000000');
+  assert.ok(Number.isFinite(Date.parse(run.vault.observedAt)));
   await f.workflow.resume(id);
   assert.deepEqual(f.counts(), { signed: 1, broadcast: 1, calls: 2 });
   assert.equal(f.workflow.public(run).payment, undefined);
@@ -61,7 +66,10 @@ test('lost broadcast response survives restart and resolves by saved hash', asyn
   assert.equal((await settled(f.workflow, id)).state, 'needs_attention');
   const restarted = new PurchaseWorkflow({ ...f.workflow });
   const second = randomUUID(); await restarted.create(second, 'purchase');
-  assert.equal((await settled(restarted, second)).error, 'AN_EARLIER_PAYMENT_NEEDS_RECONCILIATION');
+  const blocked = await settled(restarted, second);
+  assert.equal(blocked.error, 'AN_EARLIER_PAYMENT_NEEDS_RECONCILIATION');
+  assert.deepEqual(blocked.recovery, { id, scenario: 'purchase' });
+  assert.deepEqual(await restarted.recoverable(), [{ id, scenario: 'purchase' }]);
   f.resolve(); assert.equal((await restarted.resume(id)).state, 'completed');
   assert.equal(f.counts().signed, 1); assert.equal(f.counts().broadcast, 1);
 });
@@ -69,4 +77,130 @@ test('summary failure preserves paid data and never repeats payment', async t =>
   const f = await fixture(t, { summaryFailure: true }), id = randomUUID(); await f.workflow.create(id, 'purchase');
   const run = await settled(f.workflow, id); assert.equal(run.state, 'completed'); assert.ok(run.proof); assert.match(run.summary, /No further payment/);
   await f.workflow.resume(id); assert.equal(f.counts().broadcast, 1);
+});
+
+const paymentPrice = 10000000000000000000000n;
+const liquidThreshold = 1000n * 10000000000000000000n + 50000000000000000000000n + paymentPrice;
+for (const kind of ['daily', 'liquid']) {
+  test(`${kind} exhaustion stops before supplier/model/signing`, async t => {
+    const f = await fixture(t), id = randomUUID();
+    if (kind === 'daily') f.state.daily_spent = f.state.policy.per_day;
+    else f.account.amount = String(liquidThreshold - 1n);
+    await f.workflow.create(id, 'purchase');
+    const run = await settled(f.workflow, id);
+    assert.equal(run.state, 'blocked');
+    assert.equal(run.error, kind === 'daily' ? 'VAULT_BUDGET_EXHAUSTED' : 'INSUFFICIENT_VAULT_BALANCE');
+    assert.deepEqual(f.counts(), { signed: 0, broadcast: 0, calls: 0 }); assert.equal(f.collected(), 0);
+  });
+  test(`${kind} exhaustion during planning stops before signing`, async t => {
+    const f = await fixture(t, { afterProposal: (state, account) => {
+      if (kind === 'daily') state.daily_spent = state.policy.per_day;
+      else account.amount = String(liquidThreshold - 1n);
+    } }), id = randomUUID();
+    await f.workflow.create(id, 'purchase'); assert.equal((await settled(f.workflow, id)).state, 'blocked');
+    assert.deepEqual(f.counts(), { signed: 0, broadcast: 0, calls: 1 });
+  });
+}
+test('exact daily capacity and liquid balance boundary can complete', async t => {
+  const f = await fixture(t), id = randomUUID();
+  f.state.daily_spent = String(BigInt(f.state.policy.per_day) - paymentPrice);
+  f.account.amount = String(liquidThreshold);
+  await f.workflow.create(id, 'purchase'); assert.equal((await settled(f.workflow, id)).state, 'completed');
+  assert.deepEqual(f.counts(), { signed: 1, broadcast: 1, calls: 2 });
+});
+
+// Incident integration uses recorded protocol receipts with isolated signer/AI.
+const { readFile } = await import('node:fs/promises');
+const { normalizeIncident, buildIncidentReport } = await import('../server/incident-report.mjs');
+const recorded = JSON.parse(await readFile(new URL('../docs/runtime-verification.json', import.meta.url)));
+async function incidentFixture(t, options = {}) {
+  const f = await fixture(t, options);
+  const raw = structuredClone(recorded.cases.find(c => c.case === 'failed-transfer').evidence.finalRpcReceipt);
+  const target = { network: 'testnet', transactionHash: raw.transaction.hash, sender: raw.transaction.signer_id };
+  const report = buildIncidentReport(normalizeIncident(raw, target), new Date().toISOString(), 'recorded-local-sandbox');
+  let verifies = 0, failDelivery = false;
+  f.workflow.incidents = { collect: async () => structuredClone(report), verify: async () => { verifies++; if (failDelivery) throw new Error('SOURCE_UNAVAILABLE'); } };
+  const inspected = await f.workflow.inspect(target);
+  return { ...f, target, inspected, report, deliveryFailure: value => { failDelivery = value; }, verifies: () => verifies };
+}
+async function incidentSettled(workflow, id) {
+  for (let n = 0; n < 200; n++) {
+    const run = await workflow.load(id);
+    if (['completed', 'blocked', 'needs_attention', 'paid_incomplete'].includes(run?.state)) return run;
+    await new Promise(resolve => setTimeout(resolve, 5));
+  }
+  throw new Error('incident not settled');
+}
+test('incident purchase binds target, verifies twice, hides unpaid report and preserves reopening', async t => {
+  const f = await incidentFixture(t), id = randomUUID();
+  assert.equal(f.inspected.report, null); assert.equal(f.inspected.eligible, true);
+  const queued = await f.workflow.create(id, 'purchase', f.inspected.id); assert.equal(queued.report, null);
+  const run = await incidentSettled(f.workflow, id); assert.equal(run.state, 'completed');
+  assert.deepEqual(run.quote.task.target, f.target); assert.equal(run.quote.reportSha256, f.report.sha256);
+  assert.ok(f.workflow.public(run).report); assert.equal(f.verifies(), 2);
+  await f.workflow.resume(id); assert.deepEqual(f.counts(), { signed: 1, broadcast: 1, calls: 2 });
+  await assert.rejects(f.workflow.create(id, 'purchase', randomUUID()), /REQUEST_ID_ALREADY_USED/);
+  await assert.rejects(f.workflow.create(randomUUID(), 'purchase', f.inspected.id), /INSPECTION_ALREADY_USED/);
+});
+test('free result cannot be charged and does not need AI or payment credentials', async t => {
+  const f = await fixture(t);
+  const raw = JSON.parse(await readFile(new URL('../docs/incident-product-evidence.json', import.meta.url))).publicRpcProbe.body.result;
+  const target = { network: 'testnet', transactionHash: raw.transaction.hash, sender: raw.transaction.signer_id };
+  const report = buildIncidentReport(normalizeIncident(raw, target), new Date().toISOString(), 'recording');
+  f.workflow.incidents = { collect: async () => report };
+  const inspected = await f.workflow.inspect(target); assert.equal(inspected.eligible, false); assert.ok(inspected.report);
+  await assert.rejects(f.workflow.create(randomUUID(), 'purchase', inspected.id), /FREE_RESULT/);
+  assert.deepEqual(f.counts(), { signed: 0, broadcast: 0, calls: 0 });
+});
+test('paid delivery failure persists fee proof and resumes without another payment or model call', async t => {
+  let f; f = await incidentFixture(t, { afterProposal: () => f.deliveryFailure(true) });
+  const id = randomUUID(); await f.workflow.create(id, 'purchase', f.inspected.id);
+  let run = await incidentSettled(f.workflow, id);
+  assert.equal(run.state, 'paid_incomplete'); assert.deepEqual(await f.workflow.recoverable(), [{ id, scenario: 'purchase', inspectionId: f.inspected.id }]); assert.ok(run.proof); assert.equal(f.workflow.public(run).report, null);
+  assert.deepEqual(f.counts(), { signed: 1, broadcast: 1, calls: 1 });
+  f.deliveryFailure(false);
+  const restarted = new PurchaseWorkflow({ ...f.workflow }); run = await restarted.resume(id);
+  assert.equal(run.state, 'completed'); assert.ok(run.report); assert.match(run.summary, /No further payment/);
+  assert.deepEqual(f.counts(), { signed: 1, broadcast: 1, calls: 1 });
+});
+test('supplier injection cannot change the diagnosis fee recipient', async t => {
+  const f = await incidentFixture(t, { invalidProposal: true }), id = randomUUID();
+  await f.workflow.create(id, 'injection', f.inspected.id);
+  const run = await incidentSettled(f.workflow, id); assert.equal(run.error, 'RECIPIENT_NOT_APPROVED');
+  assert.ok(run.model.toolCalls); assert.equal(f.counts().signed, 0);
+});
+test('unavailable source or altered stored report blocks before model or signing', async t => {
+  for (const corrupt of [false, true]) {
+    const f = await incidentFixture(t), id = randomUUID();
+    if (corrupt) {
+      const { readJson, writeJson } = await import('../server/json-file.mjs');
+      const path = f.workflow.inspectionPath(f.inspected.id), saved = await readJson(path);
+      saved.report.target.sender = 'swapped.testnet'; await writeJson(path, saved);
+      await assert.rejects(f.workflow.create(id, 'purchase', f.inspected.id), /MISMATCH/);
+    } else {
+      f.deliveryFailure(true); await f.workflow.create(id, 'purchase', f.inspected.id);
+      assert.equal((await incidentSettled(f.workflow, id)).state, 'blocked');
+    }
+    assert.deepEqual(f.counts(), { signed: 0, broadcast: 0, calls: 0 });
+  }
+});
+
+test('JSON array identifiers cannot bypass single-use inspections', async t => {
+  const f = await incidentFixture(t);
+  await assert.rejects(f.workflow.create([randomUUID()], 'purchase', f.inspected.id), /INVALID_REQUEST_ID/);
+  await assert.rejects(f.workflow.create(randomUUID(), 'purchase', [f.inspected.id]), /INVALID_REQUEST_ID/);
+  assert.deepEqual(f.counts(), { signed: 0, broadcast: 0, calls: 0 });
+});
+
+test('restart at saved fee proof before delivery blocks another purchase', async t => {
+  const f = await incidentFixture(t), id = randomUUID();
+  await f.workflow.create(id, 'purchase', f.inspected.id);
+  const first = await incidentSettled(f.workflow, id);
+  first.state = 'pending'; first.deliveryVerified = false; await f.workflow.save(first);
+  const restarted = new PurchaseWorkflow({ ...f.workflow }), second = await restarted.inspect(f.target), next = randomUUID();
+  await restarted.create(next, 'purchase', second.id);
+  assert.equal((await incidentSettled(restarted, next)).error, 'AN_EARLIER_PAYMENT_NEEDS_RECONCILIATION');
+  assert.deepEqual(f.counts(), { signed: 1, broadcast: 1, calls: 2 });
+  assert.equal((await restarted.resume(id)).state, 'completed');
+  assert.deepEqual(f.counts(), { signed: 1, broadcast: 1, calls: 2 });
 });

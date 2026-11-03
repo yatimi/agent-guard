@@ -1,0 +1,8 @@
+# Author: Tommy
+version: 1
+name: near-rpc
+interceptRequests: true
+file: default.js
+scenarios:
+  - name: default
+    path: default.js

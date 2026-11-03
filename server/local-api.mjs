@@ -8,9 +8,9 @@ export function localApi(workflow) {
       response.end(JSON.stringify(value));
     };
     if (request.headers.host !== '127.0.0.1:4173') return send(403, { error: 'LOOPBACK_HOST_REQUIRED' });
-    if (request.method === 'GET' && url.pathname === '/api/session') return send(200, { token, network: 'testnet', config: workflow.config, priceNear: '0.01' });
     const match = url.pathname.match(/^\/api\/runs\/([0-9a-f-]+)(\/resume)?$/);
     try {
+      if (request.method === 'GET' && url.pathname === '/api/session') return send(200, { token, network: 'testnet', config: workflow.config, priceNear: '0.01', recoverable: await workflow.recoverable() });
       if (request.method === 'GET' && match && !match[2]) {
         const run = await workflow.load(match[1]);
         return send(run ? 200 : 404, run ? workflow.public(run) : { error: 'RUN_NOT_FOUND' });
@@ -20,9 +20,11 @@ export function localApi(workflow) {
       for await (const chunk of request) { text += chunk; if (Buffer.byteLength(text) > 4096) return send(413, { error: 'BODY_TOO_LARGE' }); }
       const body = JSON.parse(text);
       if (!body || Array.isArray(body) || typeof body !== 'object') throw new Error('INVALID_REQUEST');
-      if (url.pathname === '/api/runs' && Object.keys(body).sort().join(',') === 'requestId,scenario') return send(202, await workflow.create(body.requestId, body.scenario));
+      if (url.pathname === '/api/inspections' && Object.keys(body).join(',') === 'target') return send(200, await workflow.inspect(body.target));
+      if (url.pathname === '/api/runs' && Object.keys(body).sort().join(',') === 'inspectionId,requestId,scenario') return send(202, await workflow.create(body.requestId, body.scenario, body.inspectionId));
+      if (url.pathname === '/api/runs' && !workflow.incidents && Object.keys(body).sort().join(',') === 'requestId,scenario') return send(202, await workflow.create(body.requestId, body.scenario));
       if (match?.[2] && Object.keys(body).length === 0) return send(200, await workflow.resume(match[1]));
       return send(400, { error: 'INVALID_REQUEST' });
-    } catch (error) { return send(409, { error: error instanceof SyntaxError ? 'INVALID_JSON' : error.message }); }
+    } catch (error) { return send(409, { error: error instanceof SyntaxError ? 'INVALID_JSON' : error.message, ...(error.recovery ? { recovery: error.recovery } : {}), ...(url.pathname === '/api/runs' && ['QUOTE_EXPIRED', 'INSPECTION_NOT_FOUND', 'FREE_RESULT_NO_PAYMENT_NEEDED'].includes(error.message) ? { noPurchaseCreated: true } : {}) }); }
   };
 }

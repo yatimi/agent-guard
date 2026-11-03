@@ -1,0 +1,9 @@
+# Author: Tommy
+simulation: agentguard-incident-rpc
+routing: path
+mocks:
+  - name: near-rpc
+    routeKey: rpc
+    origin:
+      - test.rpc.fastnear.com
+    path: postman/mocks/near-rpc/config.yaml

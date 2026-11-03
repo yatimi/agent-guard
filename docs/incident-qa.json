@@ -1,0 +1,1996 @@
+{
+  "verifiedAt": "2026-11-03T16:04:36.594Z",
+  "scope": "Final local fixture/source verification; live payment separately recorded in live-incident-purchase.json",
+  "node": {
+    "passed": 73,
+    "failed": 0,
+    "command": "npm test"
+  },
+  "browser": {
+    "browser": "Chrome/156.0.8078.80",
+    "checks": [
+      "Buy stays disabled until a free inspection produces a quote",
+      "visible opaque text in the ready screen meets measured AA contrast",
+      "supplier select accessible name matches its visible label",
+      "quoted diagnosis Buy is keyboard reachable with visible focus",
+      "lost create response disables new purchases and retains the original ID",
+      "refresh while pending performs no POST and shows no premature paid result",
+      "pending reload retains the investigated transaction identity separately from fee",
+      "restart recovery completes the original purchase without another create",
+      "completed refresh preserves the original proof without API mutation",
+      "review-only AI draft expands on demand and preserves paragraph breaks",
+      "model content renders as text and cannot inject HTML",
+      "completed screen fits 1440px without horizontal page overflow",
+      "completed screen fits 768px without horizontal page overflow",
+      "completed screen fits 390px without horizontal page overflow",
+      "completed screen fits 320px without horizontal page overflow",
+      "page has no horizontal overflow with doubled root font size at 390px",
+      "390px layout reflows with WCAG text-spacing overrides",
+      "reduced motion disables scenario transitions",
+      "request lost before persistence retries with the same ID after refresh",
+      "interruption before payment requires a fresh inspection before another fee",
+      "unknown transaction keeps Buy disabled and exposes recovery",
+      "paid delivery retry retains both identities and creates no second fee",
+      "free result displays without any purchase POST",
+      "incomplete trace cannot enable Buy",
+      "legacy paid snapshot remains readable",
+      "no uncaught browser exceptions"
+    ],
+    "contrast": [
+      {
+        "selector": "p.",
+        "text": "LOCAL UI TEST FIXTURE \u00b7 Recorded data / simulated responses \u00b7 No live ",
+        "foreground": "rgb(53, 43, 18)",
+        "background": [
+          255,
+          240,
+          194
+        ],
+        "fontSize": "16px",
+        "ratio": 12.283661717608279,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.skip",
+        "text": "Skip to workspace",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "16px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.brand",
+        "text": "G agentguard",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "24px",
+        "ratio": 14.612710908939485,
+        "required": 3,
+        "pass": true
+      },
+      {
+        "selector": "span.brand-icon",
+        "text": "G",
+        "foreground": "rgb(211, 250, 115)",
+        "background": [
+          23,
+          92,
+          61
+        ],
+        "fontSize": "23px",
+        "ratio": 6.714901757956262,
+        "required": 3,
+        "pass": true
+      },
+      {
+        "selector": "span.brand-light",
+        "text": "guard",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "24px",
+        "ratio": 14.612710908939485,
+        "required": 3,
+        "pass": true
+      },
+      {
+        "selector": "div.top-meta",
+        "text": "LOCAL LAB / BUILT FOR NEAR",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "11px",
+        "ratio": 14.612710908939485,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.",
+        "text": "How access keys work \u2197",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "11px",
+        "ratio": 14.612710908939485,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.eyebrow",
+        "text": "AUTONOMY, WITH BOUNDARIES",
+        "foreground": "rgb(23, 92, 61)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "10px",
+        "ratio": 7.500819324456392,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h1.",
+        "text": "Give agents a budget.Keep control.",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "60.48px",
+        "ratio": 14.612710908939485,
+        "required": 3,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "Keep control.",
+        "foreground": "rgb(120, 137, 124)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "60.48px",
+        "ratio": 3.4866757496688767,
+        "required": 3,
+        "pass": true
+      },
+      {
+        "selector": "p.lede",
+        "text": "An agent can make a bad decision.Your vault shouldn\u2019t have to follow i",
+        "foreground": "rgb(86, 102, 92)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "15px",
+        "ratio": 5.726889965176304,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.note-number",
+        "text": "TWO WAYS TO TRY IT",
+        "foreground": "rgb(23, 92, 61)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "10px",
+        "ratio": 7.500819324456392,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "Investigate a NEAR transaction.Explore attacks in the free lab.",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "17px",
+        "ratio": 14.612710908939485,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.mode-label",
+        "text": "Open free simulation \u2193",
+        "foreground": "rgb(95, 106, 98)",
+        "background": [
+          234,
+          240,
+          231
+        ],
+        "fontSize": "10px",
+        "ratio": 4.864042626424868,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.eyebrow",
+        "text": "LIVE TESTNET / PAID TASK",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "10px",
+        "ratio": 14.191346947178067,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h2.",
+        "text": "Understand a failed transaction.",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "36px",
+        "ratio": 14.191346947178067,
+        "required": 3,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "Check a transaction for free. For a complex incident, let your agent b",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "16px",
+        "ratio": 14.191346947178067,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.pill",
+        "text": "REAL MODEL \u00b7 TESTNET PAYMENT",
+        "foreground": "rgb(58, 98, 52)",
+        "background": [
+          238,
+          244,
+          232
+        ],
+        "fontSize": "9px",
+        "ratio": 6.29615797343068,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.honesty",
+        "text": "Free check: no AI request or payment. A diagnosis costs 0.01 testnet N",
+        "foreground": "rgb(78, 92, 70)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "13px",
+        "ratio": 6.520833597029858,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "label.",
+        "text": "Transaction networkNEAR testnetNEAR mainnet",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "13px",
+        "ratio": 14.191346947178067,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "label.",
+        "text": "Transaction hash",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "13px",
+        "ratio": 14.191346947178067,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "label.",
+        "text": "Sender account",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "13px",
+        "ratio": 14.191346947178067,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "button.text-button",
+        "text": "Check transaction \u00b7 free",
+        "foreground": "rgb(73, 100, 78)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "14px",
+        "ratio": 5.967452852456612,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "button.text-button",
+        "text": "Use a recorded successful payment",
+        "foreground": "rgb(73, 100, 78)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "14px",
+        "ratio": 5.967452852456612,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.live-guidance",
+        "text": "Enter the transaction and its sender. The diagnostic fee is a separate",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "16px",
+        "ratio": 14.191346947178067,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "label.",
+        "text": "Supplier response Normal quoteQuote with prompt injection",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "16px",
+        "ratio": 14.191346947178067,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "strong.live-status",
+        "text": "Ready for a free transaction check",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "16px",
+        "ratio": 14.191346947178067,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.live-guidance",
+        "text": "A simple confirmed transfer needs no paid diagnosis. Check first; buy ",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "16px",
+        "ratio": 14.191346947178067,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "summary.",
+        "text": "Purchase details and execution trace",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          242,
+          246,
+          238
+        ],
+        "fontSize": "16px",
+        "ratio": 14.191346947178067,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h2.",
+        "text": "Free security simulation",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "19px",
+        "ratio": 14.612710908939485,
+        "required": 3,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "SCRIPTED SCENARIOS \u00b7 NO API OR PAYMENT",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "9px",
+        "ratio": 5.6674822536150105,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "\u25a5 Spending policy",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.pill",
+        "text": "FIXED",
+        "foreground": "rgb(58, 98, 52)",
+        "background": [
+          238,
+          244,
+          232
+        ],
+        "fontSize": "9px",
+        "ratio": 6.29615797343068,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "Available in demo vault",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#balance",
+        "text": "10",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "45px",
+        "ratio": 15.527960274898824,
+        "required": 3,
+        "pass": true
+      },
+      {
+        "selector": "small.",
+        "text": "NEAR",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "12px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "Local model \u00b7 not an onchain balance",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "10px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "dt.",
+        "text": "Per payment",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "dd.",
+        "text": "1 NEAR",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "dt.",
+        "text": "Daily budget",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "dd.",
+        "text": "2 NEAR",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "dt.",
+        "text": "Lifetime budget",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "dd.",
+        "text": "5 NEAR",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "dt.",
+        "text": "Operating reserve",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "dd.",
+        "text": "0.05 NEAR",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "Daily usage",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "10px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "0 / 2 NEAR",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "10px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#daily",
+        "text": "0",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "10px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.eyebrow",
+        "text": "ALLOWED RECIPIENT",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          246,
+          248,
+          243
+        ],
+        "fontSize": "8px",
+        "ratio": 5.632357587987268,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "code.",
+        "text": "data-provider.testnet",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          246,
+          248,
+          243
+        ],
+        "fontSize": "11px",
+        "ratio": 14.522147487366531,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.subtle",
+        "text": "All other addresses are denied.",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          246,
+          248,
+          243
+        ],
+        "fontSize": "10px",
+        "ratio": 5.632357587987268,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#vault-state",
+        "text": "\u25cf Agent access enabled",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#pause",
+        "text": "Pause agent",
+        "foreground": "rgb(73, 100, 78)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "10px",
+        "ratio": 6.529497952532529,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "\u2318 Challenge the agent",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.pill.muted",
+        "text": "SIMULATION",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          246,
+          247,
+          244
+        ],
+        "fontSize": "9px",
+        "ratio": 5.600657332369986,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.section-copy",
+        "text": "Choose a scenario. The policy checks the payment, regardless of what t",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "12px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "01",
+        "foreground": "rgb(89, 108, 78)",
+        "background": [
+          240,
+          246,
+          231
+        ],
+        "fontSize": "9px",
+        "ratio": 5.174529485291085,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "strong.",
+        "text": "Valid purchase",
+        "foreground": "rgb(0, 0, 0)",
+        "background": [
+          240,
+          246,
+          231
+        ],
+        "fontSize": "11px",
+        "ratio": 19.041264216716513,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "small.",
+        "text": "A useful agent action",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          240,
+          246,
+          231
+        ],
+        "fontSize": "9px",
+        "ratio": 5.460724574656465,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "02",
+        "foreground": "rgb(89, 108, 78)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.706822716934656,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "strong.",
+        "text": "Recipient injection",
+        "foreground": "rgb(0, 0, 0)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 21,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "small.",
+        "text": "A substituted recipient",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "03",
+        "foreground": "rgb(89, 108, 78)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.706822716934656,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "strong.",
+        "text": "Budget breach",
+        "foreground": "rgb(0, 0, 0)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 21,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "small.",
+        "text": "A payment over the limit",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "04",
+        "foreground": "rgb(89, 108, 78)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.706822716934656,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "strong.",
+        "text": "Replay attack",
+        "foreground": "rgb(0, 0, 0)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 21,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "small.",
+        "text": "A reused payment nonce",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.eyebrow",
+        "text": "AGENT INPUT \u00b7 SCRIPTED SCENARIO",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "8px",
+        "ratio": 5.6674822536150105,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#prompt",
+        "text": "Purchase a market-data report from data-provider.testnet for 0.4 NEAR.",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "11px",
+        "ratio": 14.612710908939485,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "Recipient",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#recipient",
+        "text": "data-provider.testnet",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "10px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "Requested",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#amount",
+        "text": "0.4 NEAR",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "12px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#run",
+        "text": "Run scenario \u2197",
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          23,
+          92,
+          61
+        ],
+        "fontSize": "12px",
+        "ratio": 7.970624015294727,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "\u2197",
+        "foreground": "rgb(211, 250, 115)",
+        "background": [
+          23,
+          92,
+          61
+        ],
+        "fontSize": "18px",
+        "ratio": 6.714901757956262,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.honesty",
+        "text": "No wallet connection. No model inference. Decisions run in a browser t",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "\u2261 Decision trace",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#export",
+        "text": "Export JSON \u2193",
+        "foreground": "rgb(73, 100, 78)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "10px",
+        "ratio": 6.529497952532529,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#trace-label",
+        "text": "Ready for a scenario",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#counter",
+        "text": "00 EVENTS",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "8px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h4.",
+        "text": "Every decision leaves a trail.",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "12px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "Run a scenario to inspect the request,policy outcome and settlement.",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "Monotonic nonce 0",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 6.022458107960671,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#nonce",
+        "text": "0",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "#reset",
+        "text": "Reset lab \u21ba",
+        "foreground": "rgb(73, 100, 78)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "10px",
+        "ratio": 6.529497952532529,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h2.",
+        "text": "Beyond the simulation.",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          240,
+          245,
+          233
+        ],
+        "fontSize": "26px",
+        "ratio": 14.006704164399464,
+        "required": 3,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "Recorded NEAR testnet run \u00b7 2026-11-03T10:45:18.472Z \u00b7 guard.yatimi.te",
+        "foreground": "rgb(82, 97, 78)",
+        "background": [
+          240,
+          245,
+          233
+        ],
+        "fontSize": "12px",
+        "ratio": 5.959326363080014,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "\u2713 EXPECTED OUTCOME",
+        "foreground": "rgb(72, 103, 59)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "8px",
+        "ratio": 6.404790012669438,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Allowed supplier payment",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "0.01 NEAR transferred. Budget updated and settlement completed.",
+        "foreground": "rgb(100, 114, 91)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.12213021853264,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.",
+        "text": "Inspect transaction \u2197",
+        "foreground": "rgb(23, 92, 61)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 7.970624015294727,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "\u2713 EXPECTED OUTCOME",
+        "foreground": "rgb(72, 103, 59)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "8px",
+        "ratio": 6.404790012669438,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Prompt-injected recipient",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "A substituted address was rejected. No payment was made.",
+        "foreground": "rgb(100, 114, 91)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.12213021853264,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.",
+        "text": "Inspect transaction \u2197",
+        "foreground": "rgb(23, 92, 61)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 7.970624015294727,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "\u2713 EXPECTED OUTCOME",
+        "foreground": "rgb(72, 103, 59)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "8px",
+        "ratio": 6.404790012669438,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Oversized payment",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "An amount above the payment limit was rejected.",
+        "foreground": "rgb(100, 114, 91)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.12213021853264,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.",
+        "text": "Inspect transaction \u2197",
+        "foreground": "rgb(23, 92, 61)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 7.970624015294727,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "\u2713 EXPECTED OUTCOME",
+        "foreground": "rgb(72, 103, 59)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "8px",
+        "ratio": 6.404790012669438,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Replay accepted nonce",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "A previously accepted payment could not be repeated.",
+        "foreground": "rgb(100, 114, 91)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.12213021853264,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.",
+        "text": "Inspect transaction \u2197",
+        "foreground": "rgb(23, 92, 61)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 7.970624015294727,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "\u2713 EXPECTED OUTCOME",
+        "foreground": "rgb(72, 103, 59)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "8px",
+        "ratio": 6.404790012669438,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Agent cannot administer vault",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "The network rejected an administrative call from the agent key.",
+        "foreground": "rgb(100, 114, 91)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.12213021853264,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "\u2713 EXPECTED OUTCOME",
+        "foreground": "rgb(72, 103, 59)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "8px",
+        "ratio": 6.404790012669438,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Agent cannot call another contract",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "The network rejected a call outside the key\u2019s permitted contract.",
+        "foreground": "rgb(100, 114, 91)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.12213021853264,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "\u2713 EXPECTED OUTCOME",
+        "foreground": "rgb(72, 103, 59)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "8px",
+        "ratio": 6.404790012669438,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Owner cannot forge private callback",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "An external settlement callback was rejected by the contract.",
+        "foreground": "rgb(100, 114, 91)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.12213021853264,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.",
+        "text": "Inspect transaction \u2197",
+        "foreground": "rgb(23, 92, 61)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 7.970624015294727,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "\u2713 EXPECTED OUTCOME",
+        "foreground": "rgb(72, 103, 59)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "8px",
+        "ratio": 6.404790012669438,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Owner emergency pause blocks agent",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "13px",
+        "ratio": 15.527960274898824,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "The owner paused payments; an otherwise valid request was rejected.",
+        "foreground": "rgb(100, 114, 91)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "9px",
+        "ratio": 5.12213021853264,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.",
+        "text": "Inspect transaction \u2197",
+        "foreground": "rgb(23, 92, 61)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "fontSize": "11px",
+        "ratio": 7.970624015294727,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "a.",
+        "text": "Download recorded evidence & CLI output \u2193",
+        "foreground": "rgb(23, 92, 61)",
+        "background": [
+          240,
+          245,
+          233
+        ],
+        "fontSize": "11px",
+        "ratio": 7.1897513009717215,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "01 / CONSTRAIN",
+        "foreground": "rgb(89, 108, 78)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "9px",
+        "ratio": 5.370451050543925,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Authority stays narrow.",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "14px",
+        "ratio": 14.612710908939485,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "The agent key calls only the vault\u2019s payment method. It gets no full-a",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "11px",
+        "ratio": 5.6674822536150105,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "02 / ENFORCE",
+        "foreground": "rgb(89, 108, 78)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "9px",
+        "ratio": 5.370451050543925,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Rules live in the contract.",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "14px",
+        "ratio": 14.612710908939485,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "Recipients, budgets and nonces are checked before a transfer is dispat",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "11px",
+        "ratio": 5.6674822536150105,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "03 / VERIFY",
+        "foreground": "rgb(89, 108, 78)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "9px",
+        "ratio": 5.370451050543925,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "h3.",
+        "text": "Proof before promises.",
+        "foreground": "rgb(25, 39, 32)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "14px",
+        "ratio": 14.612710908939485,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "p.",
+        "text": "The interactive lab is a simulation. Recorded testnet evidence, when a",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "11px",
+        "ratio": 5.6674822536150105,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "AGENT GUARD / WORKING PROTOTYPE",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "9px",
+        "ratio": 5.6674822536150105,
+        "required": 4.5,
+        "pass": true
+      },
+      {
+        "selector": "span.",
+        "text": "NEAR Hackathon 2026 \u00b7 Security & agent tooling",
+        "foreground": "rgb(89, 102, 94)",
+        "background": [
+          247,
+          248,
+          250
+        ],
+        "fontSize": "9px",
+        "ratio": 5.6674822536150105,
+        "required": 4.5,
+        "pass": true
+      }
+    ],
+    "accessibleControls": [
+      {
+        "role": "link",
+        "name": "Skip to workspace"
+      },
+      {
+        "role": "link",
+        "name": "AgentGuard home"
+      },
+      {
+        "role": "link",
+        "name": "How access keys work \u2197"
+      },
+      {
+        "role": "link",
+        "name": "Open free simulation \u2193"
+      },
+      {
+        "role": "button",
+        "name": "Buy diagnosis \u00b7 0.01 testnet NEAR \u2197"
+      },
+      {
+        "role": "link",
+        "name": "Inspect transaction \u2197"
+      },
+      {
+        "role": "link",
+        "name": "Inspect transaction \u2197"
+      },
+      {
+        "role": "link",
+        "name": "Inspect transaction \u2197"
+      },
+      {
+        "role": "link",
+        "name": "Inspect transaction \u2197"
+      },
+      {
+        "role": "link",
+        "name": "Inspect transaction \u2197"
+      },
+      {
+        "role": "link",
+        "name": "Inspect transaction \u2197"
+      },
+      {
+        "role": "link",
+        "name": "Download recorded evidence & CLI output \u2193"
+      },
+      {
+        "role": "button",
+        "name": "Check transaction \u00b7 free"
+      },
+      {
+        "role": "button",
+        "name": "Use a recorded successful payment"
+      },
+      {
+        "role": "combobox",
+        "name": "Supplier response"
+      },
+      {
+        "role": "button",
+        "name": "Pause agent"
+      },
+      {
+        "role": "button",
+        "name": "Run scenario \u2197"
+      },
+      {
+        "role": "button",
+        "name": "Export JSON \u2193"
+      },
+      {
+        "role": "button",
+        "name": "Reset lab \u21ba"
+      },
+      {
+        "role": "combobox",
+        "name": "Transaction network"
+      },
+      {
+        "role": "button",
+        "name": "01 Valid purchase A useful agent action"
+      },
+      {
+        "role": "button",
+        "name": "02 Recipient injection A substituted recipient"
+      },
+      {
+        "role": "button",
+        "name": "03 Budget breach A payment over the limit"
+      },
+      {
+        "role": "button",
+        "name": "04 Replay attack A reused payment nonce"
+      }
+    ],
+    "limitations": "Chrome UI fixtures plus recorded public dataset; no new model call, signing or live purchase. Does not establish screen-reader support."
+  },
+  "http": {
+    "command": "node scripts/test-incident-http.mjs",
+    "passed": true,
+    "scope": "Recorded final trace/recheck, missing receipt, 429, timeout, response size; local Postman simulation only"
+  },
+  "historicalReplay": {
+    "responses": 15,
+    "controls": 14,
+    "scope": "Original snapshot prompt; not incident-v1"
+  },
+  "sourceHashes": {
+    "package.json": "13389b1e7c84c7ab38957faf8fb46c43ec2940825e9aec146b83c3af8b945713",
+    "postman/mocks/near-rpc/config.yaml": "318f9987d365fc679f9a64047cb4be57a6b89aa56b4a7b191f08c84bcdea71f8",
+    "postman/mocks/near-rpc/default.js": "1ea5baf82556763be9532c36c2644268744d5e2e77354412a20adef7ca76a7be",
+    "postman/simulations/incident-rpc.sim.yaml": "4587a74c525f5a13266c7af93aa55822a6c88ffbbd2bb03cb403f1cace8abbce",
+    "scripts/check-browser.mjs": "e0be10a7f6ea89cced6f99b6febe9660b8ae256e525806ce0440322d10d35ea1",
+    "scripts/inspect-incident.mjs": "da70cbe44590735fe48feddd4fe506a621a55874d5387c30109a35972a3f78bb",
+    "scripts/serve.mjs": "76e46d0b5afdbfb6c70ad0c7df7a6990583a61d9ca763c8a784c05311f155aa0",
+    "scripts/test-incident-http.mjs": "f09e715831a7421a7df06c0b0d4261c97111fde4180fa3d883b886bca53ce372",
+    "server/incident-prompt.mjs": "3fc590664b729f98464539a247517fac3f2f3f141f04194b9c9d8c4d9945845b",
+    "server/incident-report.mjs": "bf1a35ebcc2c85d249fc6b1d73aee4051029eb5b40d385cd8785ac69a873de61",
+    "server/incident-service.mjs": "aec2ef9952f9fb9990363ba8a5acf260265c834da7347e029d46c548bdedb300",
+    "server/local-api.mjs": "3cd35172f17ef8221e7f666e54d106459362a3733ab23c633dc5377c87ccc5ad",
+    "server/purchase-workflow.mjs": "060aed21b739c4683e95f2d547775625b273c6fa3b4b0420da7fb6f5c58eff94",
+    "server/rpc-client.mjs": "63c103a70491ea62b637a8dd7ff09fdcaf07d08ac850c45db25f54cd8d96f614",
+    "tests/fixtures/recovery-server.mjs": "ec6f4ab79ea7aff2952ed70147b581e75f647e4403956b0c33d4e5e0eb44c2c8",
+    "tests/incident-report.test.mjs": "b32b55e73844ed60952e12cfe7b0c2ada2164d1d61abeab08c453121a839687e",
+    "tests/live-purchase.test.mjs": "c5112ad7373edb308b0f2146aa619212bd1bf77302393bad2058228d988c5ae8",
+    "tests/recovery-http.test.mjs": "0f9c6ed37039b84982a845ab4f08a21f18c191ccdc855deccff7b5f776649c40",
+    "tests/workflow.test.mjs": "dc0f5ebf8b809e7fb38151c892e4a34c4484ea13c379d197bc99e3439e0821dd",
+    "web/incident-result.mjs": "520e633a5f6d8963ffecbacfae6c922d9d1cbc1b7b33b6d295512e9000de7717",
+    "web/index.html": "178e5b3fe41c30229735d2a9aef7c0433933665b13fb22bdd9be4682f3ecda4c",
+    "web/live-purchase.css": "b83c59a52c291aaff95d45413631a6896c72976194393581ed244180c5e9f98a",
+    "web/live-purchase.mjs": "9afefe68fd1be55df6b9f188b41e3347d377939b77e9ec38758f101fcc2bb66f"
+  }
+}

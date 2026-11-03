@@ -1,0 +1,157 @@
+{
+  "mode": "live-browser-testnet-purchase",
+  "startedAt": "2026-11-03T11:20:00.865Z",
+  "completedAt": "2026-11-03T11:20:15.929Z",
+  "requestId": "6de98e4d-efd6-4f01-9f5a-17bed0d4bc5e",
+  "transactionHash": "BeXdyg4jBTzqHtaKs3Xm5LEsxUHqZXeGqR1wRTFB8i6T",
+  "refreshWhilePending": true,
+  "completedRefreshPreservedIdAndBudget": true,
+  "quote": {
+    "id": "6de98e4d-efd6-4f01-9f5a-17bed0d4bc5e",
+    "title": "NEAR Mainnet Pulse",
+    "recipient": "supplier.yatimi.testnet",
+    "amountYocto": "10000000000000000000000",
+    "network": "testnet",
+    "datasetSha256": "4a622d5b35c7ef17ee28188e58acdc867d6cb246afce5f74bc40f257c11eed2c",
+    "expiresAt": "2026-11-03T11:30:04.658Z"
+  },
+  "proof": {
+    "transactionHash": "BeXdyg4jBTzqHtaKs3Xm5LEsxUHqZXeGqR1wRTFB8i6T",
+    "nonce": "4",
+    "recipient": "supplier.yatimi.testnet",
+    "amountYocto": "10000000000000000000000",
+    "verifiedAt": "2026-11-03T11:20:12.195Z",
+    "receiptCount": 6
+  },
+  "dataset": {
+    "title": "NEAR Mainnet Pulse",
+    "network": "mainnet",
+    "observedAt": "2026-11-03T11:20:04.657Z",
+    "source": "https://free.rpc.fastnear.com",
+    "method": "Six hash-linked finalized blocks; included chunk headers only.",
+    "blocks": [
+      {
+        "height": 222862957,
+        "hash": "Ewe2AwC6Ehp2ytTGRSFRcUAvbZBpbp7EVHsM27g7mtmx",
+        "previousHash": "A5WEayj3kaBsUCy69xXWQwy5McE8YktxFidgBzjzPeob",
+        "timestampNanoseconds": "1793704802071559777",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "12422294015544",
+        "gasLimit": "10000000000000000"
+      },
+      {
+        "height": 222862956,
+        "hash": "A5WEayj3kaBsUCy69xXWQwy5McE8YktxFidgBzjzPeob",
+        "previousHash": "2ebk4vyFeGduEeymUU3VvbSJxHNm3aEs21S6FoXKtj8M",
+        "timestampNanoseconds": "1793704801455427163",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "14435829430855",
+        "gasLimit": "10000000000000000"
+      },
+      {
+        "height": 222862955,
+        "hash": "2ebk4vyFeGduEeymUU3VvbSJxHNm3aEs21S6FoXKtj8M",
+        "previousHash": "8cGY2mBMnpgGfr8FaeC8d2hhmmAuwo321aznsFsAaJyG",
+        "timestampNanoseconds": "1793704800942423660",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "15594252497266",
+        "gasLimit": "10000000000000000"
+      },
+      {
+        "height": 222862954,
+        "hash": "8cGY2mBMnpgGfr8FaeC8d2hhmmAuwo321aznsFsAaJyG",
+        "previousHash": "7q6iVDiW9ZmWB7B1Yvuq9sr9vwEZAPicBD67A5FjeD3S",
+        "timestampNanoseconds": "1793704800327407200",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "14153383188306",
+        "gasLimit": "10000000000000000"
+      },
+      {
+        "height": 222862953,
+        "hash": "7q6iVDiW9ZmWB7B1Yvuq9sr9vwEZAPicBD67A5FjeD3S",
+        "previousHash": "F2WcGuojmjkqNM5XU7RCuS2HRCLKfNqkPGtpXrxzAwoT",
+        "timestampNanoseconds": "1793704799816677455",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "11364817168443",
+        "gasLimit": "10000000000000000"
+      },
+      {
+        "height": 222862952,
+        "hash": "F2WcGuojmjkqNM5XU7RCuS2HRCLKfNqkPGtpXrxzAwoT",
+        "previousHash": "Fgz9bmiQKyxGDEvQrKmynQFsseynQ3UaYv5PdpineUX8",
+        "timestampNanoseconds": "1793704799209656810",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "15973904519216",
+        "gasLimit": "10000000000000000"
+      }
+    ],
+    "metrics": {
+      "blocks": 6,
+      "firstHeight": 222862952,
+      "lastHeight": 222862957,
+      "meanBlockIntervalMs": 572,
+      "maxBlockIntervalMs": 616,
+      "includedChunks": 60,
+      "sampledChunkGasUsedTgas": "83",
+      "sampledChunkGasCapacityPercent": 0.13
+    },
+    "limitations": [
+      "Six blocks are a short observation window, not a trend.",
+      "Chunk-header gas is not transaction throughput or active-user count.",
+      "Public RPC data is aggregated by our demo supplier; this is not an independent commercial data vendor.",
+      "Only payment uses testnet; observations are read from mainnet."
+    ],
+    "sha256": "4a622d5b35c7ef17ee28188e58acdc867d6cb246afce5f74bc40f257c11eed2c"
+  },
+  "summary": "NEAR measurements cover six blocks (heights 222862952\u2013222862957) \u2014 a short sample window, not a trend. Mean block interval was 572 ms, with a maximum of 616 ms. The sample included 60 chunks, with sampled chunk gas use of 83 Tgas, representing 0.13% of sampled chunk gas capacity. Note that chunk gas use is not a transaction count, and no transaction throughput or active-user figures can be derived. Data comes from a public RPC aggregated by a demo supplier, not an independent commercial vendor; payment uses testnet while observations are read from mainnet.",
+  "model": {
+    "name": "z-ai/glm-5.3-flash",
+    "usage": {
+      "promptTokens": 401,
+      "completionTokens": 67
+    },
+    "estimatedCostUsd": 6.558e-05
+  },
+  "summaryModel": {
+    "name": "z-ai/glm-5.3-flash",
+    "usage": {
+      "promptTokens": 195,
+      "completionTokens": 135
+    },
+    "estimatedCostUsd": 8.31e-05
+  },
+  "vault": {
+    "observedAt": "2026-11-03T11:20:01.093Z",
+    "daily_spent": "20000000000000000000000",
+    "day": "20760",
+    "next_nonce": "4",
+    "owner": "yatimi.testnet",
+    "paused": false,
+    "pending": null,
+    "policy": {
+      "agent_key": "ed25519:54bRSUjTGozbUeM9SCzbUweHi4pgLAJ5bYVEvn6E7JcU",
+      "lifetime_budget": "500000000000000000000000",
+      "per_day": "200000000000000000000000",
+      "per_payment": "100000000000000000000000",
+      "recipients": [
+        "supplier.yatimi.testnet"
+      ]
+    },
+    "total_spent": "40000000000000000000000"
+  },
+  "sourceBaseline": "b07f87d3ff8731bc499b8878e4525b2818831330",
+  "sourceNote": "Baseline plus local recovery changes; hashes below identify the exercised code.",
+  "sourceSha256": {
+    "server/purchase-workflow.mjs": "bf656b8e6eee565a7798babc731ebecb13c0ecbcf664cd81c950b389e1d5d860",
+    "server/local-api.mjs": "44fe03bfb4c9996b505f7665f6ff0dcbfcda4ac8de45edf46f8952e0e7ef6ce6",
+    "web/live-purchase.mjs": "9b21a7953351284a97b5649be7d704f9218087b4fc8f3454fd36f162e7de7725",
+    "web/live-purchase.css": "57e6108bcaac6845f5c954e5914b716b83c2ca75b125ddeff1701c10429cc2f9",
+    "web/index.html": "a001c2d1cd78c6cfce1af51939c15cb34b77886b5ee2f8ab49da1c8be6950daf"
+  }
+}

@@ -1,0 +1,31 @@
+# Author: Tommy
+purpose:
+  stands_in_for: Bounded NEAR EXPERIMENTAL_tx_status responses
+  unblocks: Exercise the actual RpcClient and IncidentService without a funded account or AI key
+assumptions:
+  - id: recorded-final-trace
+    status: supported
+    claim: The collector normalizes a saved finalized failed-transfer trace and verifies an identical source read.
+    reason: Local HTTP assertions passed against the recorded sandbox response; this is not a fresh public transaction.
+    verification: scripts/test-incident-http.mjs passed on 2026-11-03 with Postman CLI 1.73.0 on port 4011.
+    source: docs/runtime-verification.json; postman/mocks/near-rpc/default.js; tests/incident-report.test.mjs
+    updated_at: '2026-11-03'
+  - id: bounded-caller-failures
+    status: supported
+    claim: Missing receipt data, HTTP 429, a delayed response and an oversized response reject without automatic retries.
+    reason: Six requests total were inspected; two FINAL reads and one each for missing, quota, timeout and large response.
+    verification: Five served and one HTTP failure in the simulation summary; the delayed endpoint eventually returned 200 after the client timeout.
+    source: scripts/test-incident-http.mjs; server/rpc-client.mjs; server/incident-service.mjs
+    updated_at: '2026-11-03'
+  - id: provider-failure-equivalence
+    status: unknown
+    claim: Public RPC would fail with these exact bodies and timings.
+    reason: No live quota exhaustion, forced outage or archive coverage experiment was performed.
+    verification: Fresh public lookup and a live incident purchase succeeded separately; mock behavior establishes only local caller handling.
+    source: https://docs.near.org/api/rpc/transactions
+    updated_at: '2026-11-03'
+limitations:
+  - No authenticated Postman workspace was available; local-only mode was used without publication.
+  - API discovery did not yield an appropriate NEAR collection; recorded protocol responses and official RPC documentation supplied the narrow contract.
+  - Only the listed test paths are modeled; all other requests return 501.
+  - The first attempt exposed that Postman had already parsed the request body; the mock was corrected and rerun.

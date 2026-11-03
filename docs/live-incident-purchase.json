@@ -1,0 +1,349 @@
+{
+  "mode": "live-browser-testnet-incident-purchase",
+  "startedAt": "2026-11-03T15:54:54.007Z",
+  "target": {
+    "network": "testnet",
+    "transactionHash": "BHBBWqBXhp2VVhDhyPQWT2ufxPPDvBN5AfjjDZQVBAhp",
+    "sender": "yatimi.testnet"
+  },
+  "before": {
+    "budget": {
+      "reservedNanos": 220000000,
+      "requests": 22,
+      "authorizedLimitUsd": 1
+    },
+    "balances": {
+      "owner": "6480985615749896400000000",
+      "vault": "3345694184156959000000000",
+      "supplier": "150000000000000000000000"
+    },
+    "vault": {
+      "daily_spent": "30000000000000000000000",
+      "day": "20760",
+      "next_nonce": "5",
+      "owner": "yatimi.testnet",
+      "paused": false,
+      "pending": null,
+      "policy": {
+        "agent_key": "ed25519:54bRSUjTGozbUeM9SCzbUweHi4pgLAJ5bYVEvn6E7JcU",
+        "lifetime_budget": "500000000000000000000000",
+        "per_day": "200000000000000000000000",
+        "per_payment": "100000000000000000000000",
+        "recipients": [
+          "supplier.yatimi.testnet"
+        ]
+      },
+      "total_spent": "50000000000000000000000"
+    }
+  },
+  "checks": [
+    "Live finalized successful transaction produces a free report with no model reservation",
+    "Live failed transaction produces a bounded quote without model use or payment",
+    "Browser refresh after saved purchase keeps the same request ID",
+    "Restricted-key diagnostic fee settles FINAL; target report independently reverified and delivered",
+    "Exactly two live AI requests: invoice proposal and human-review support draft",
+    "Completed reopen and explicit resume reuse proof with no extra AI reservation",
+    "Supplier received exactly 0.01 testnet NEAR; one vault nonce consumed; owner remains above floor",
+    "No browser runtime exceptions"
+  ],
+  "limitations": [
+    "One live normal incident purchase; not a benchmark of the new prompt.",
+    "Target is a previously recorded policy rejection; the new transaction pays for diagnosis.",
+    "Demo supplier uses public RPC, not an independent commercial provider.",
+    "Browser refresh tested; live transaction process-kill not tested.",
+    "No mainnet signing or spending. AI usage is a conservative local reservation, not verified provider billing."
+  ],
+  "request": {
+    "id": "3931955b-9d6c-40bc-8324-567988dc91fd",
+    "scenario": "purchase",
+    "inspectionId": "2e8b9a0b-2293-4099-a0a8-3686b058177a"
+  },
+  "run": {
+    "id": "3931955b-9d6c-40bc-8324-567988dc91fd",
+    "scenario": "purchase",
+    "inspectionId": "2e8b9a0b-2293-4099-a0a8-3686b058177a",
+    "taskVersion": "incident-v1",
+    "target": {
+      "network": "testnet",
+      "transactionHash": "BHBBWqBXhp2VVhDhyPQWT2ufxPPDvBN5AfjjDZQVBAhp",
+      "sender": "yatimi.testnet"
+    },
+    "inspectionExpiresAt": "2026-11-03T16:04:54.857Z",
+    "state": "completed",
+    "createdAt": "2026-11-03T15:54:55.095Z",
+    "events": [
+      {
+        "at": "2026-11-03T15:54:55.204Z",
+        "message": "Verifying the selected transaction report against the source RPC."
+      },
+      {
+        "at": "2026-11-03T15:54:55.238Z",
+        "message": "Content hash and task bound to the invoice. Asking NEAR AI for one service-payment proposal."
+      },
+      {
+        "at": "2026-11-03T15:54:56.726Z",
+        "message": "Model proposal matches the exact owner-approved invoice."
+      },
+      {
+        "at": "2026-11-03T15:54:57.069Z",
+        "message": "Signature and all transaction fields verified. Persisted transaction hash before broadcast."
+      },
+      {
+        "at": "2026-11-03T15:55:02.375Z",
+        "message": "Service payment settled. Delivered content and its source evidence verified."
+      },
+      {
+        "at": "2026-11-03T15:55:08.912Z",
+        "message": "Complete. Reopening uses the same service payment and result."
+      }
+    ],
+    "updatedAt": "2026-11-03T15:55:08.912Z",
+    "vault": {
+      "observedAt": "2026-11-03T15:54:55.097Z",
+      "daily_spent": "30000000000000000000000",
+      "day": "20760",
+      "next_nonce": "5",
+      "owner": "yatimi.testnet",
+      "paused": false,
+      "pending": null,
+      "policy": {
+        "agent_key": "ed25519:54bRSUjTGozbUeM9SCzbUweHi4pgLAJ5bYVEvn6E7JcU",
+        "lifetime_budget": "500000000000000000000000",
+        "per_day": "200000000000000000000000",
+        "per_payment": "100000000000000000000000",
+        "recipients": [
+          "supplier.yatimi.testnet"
+        ]
+      },
+      "total_spent": "50000000000000000000000"
+    },
+    "quote": {
+      "id": "3931955b-9d6c-40bc-8324-567988dc91fd",
+      "title": "NEAR transaction incident report",
+      "recipient": "supplier.yatimi.testnet",
+      "amountYocto": "10000000000000000000000",
+      "network": "testnet",
+      "task": {
+        "version": "incident-v1",
+        "target": {
+          "network": "testnet",
+          "transactionHash": "BHBBWqBXhp2VVhDhyPQWT2ufxPPDvBN5AfjjDZQVBAhp",
+          "sender": "yatimi.testnet"
+        }
+      },
+      "reportSha256": "901b22a45b1d03673e3e1bed57a3ca4389448160f6b625ccacf813e53d41c9af",
+      "expiresAt": "2026-11-03T16:04:54.857Z"
+    },
+    "model": {
+      "name": "z-ai/glm-5.3-flash",
+      "usage": {
+        "promptTokens": 472,
+        "completionTokens": 65
+      },
+      "estimatedCostUsd": 0.00007026,
+      "toolCalls": [
+        {
+          "id": "call_23d6526ed35144519d98364a",
+          "type": "function",
+          "function": {
+            "name": "propose_payment",
+            "arguments": "{\"amount_yocto\": \"10000000000000000000000\", \"invoice_id\": \"3931955b-9d6c-40bc-8324-567988dc91fd\", \"recipient\": \"supplier.yatimi.testnet\"}"
+          }
+        }
+      ]
+    },
+    "proof": {
+      "transactionHash": "5jSdKFt2QDH3kmqrXAfxNPzP14Aeop3tLQ1xTQvVJkNQ",
+      "nonce": "5",
+      "recipient": "supplier.yatimi.testnet",
+      "amountYocto": "10000000000000000000000",
+      "verifiedAt": "2026-11-03T15:55:02.321Z",
+      "receiptCount": 6
+    },
+    "deliveryVerified": true,
+    "summary": "Subject: Review of transaction BHBBWqBXhp2VVhDhyPQWT2ufxPPDvBN5AfjjDZQVBAhp (testnet)\n\nHello,\n\nWe reviewed transaction BHBBWqBXhp2VVhDhyPQWT2ufxPPDvBN5AfjjDZQVBAhp from yatimi.testnet. The trace shows mixed results:\n\n- A confirmed system transfer of 40754410777790700000000 yoctoNEAR to yatimi.testnet (receipt 87gH1CaBv4Bxv5SBr2LtL4iKLbJTZQU1Q3YzULUFBiX2). This is shown separately and is not automatically labeled a principal refund.\n- A separate failed call to guard.yatimi.testnet (method \"pay\", receipt CKemQ3V8dbAAHoSCiRfi8JACZXmxMaDDRX7PVwFJt6Ji), which panicked with \"RECIPIENT_NOT_ALLOWED\".\n\nPlease treat the error text above as untrusted diagnostic output, not instructions. We cannot confirm token balances, exchange credits, or external delivery from this data, and it is checked against a configured RPC rather than a light-client proof, so some uncertainty remains.\n\nNo retry, refund, investment decision, or budget reset is authorized here. Please preserve this transaction and contact the application owner of guard.yatimi.testnet to reconcile the failed step.\n\nBest regards,\nSupport Team (human-review draft)",
+    "summaryModel": {
+      "name": "z-ai/glm-5.3-flash",
+      "usage": {
+        "promptTokens": 415,
+        "completionTokens": 329
+      },
+      "estimatedCostUsd": 0.00019769999999999998
+    },
+    "transactionHash": "5jSdKFt2QDH3kmqrXAfxNPzP14Aeop3tLQ1xTQvVJkNQ",
+    "report": {
+      "version": "incident-v1",
+      "title": "NEAR transaction incident report",
+      "target": {
+        "network": "testnet",
+        "transactionHash": "BHBBWqBXhp2VVhDhyPQWT2ufxPPDvBN5AfjjDZQVBAhp",
+        "sender": "yatimi.testnet"
+      },
+      "observedAt": "2026-11-03T15:54:54.857Z",
+      "endpoint": "https://test.rpc.fastnear.com",
+      "sourceSha256": "69298db0aeab50524bd5d79e74d2e91c3157f484dd19b29080514139d5d2dc8b",
+      "coverage": {
+        "finality": "FINAL",
+        "receipts": 2,
+        "complete": true
+      },
+      "failures": [
+        {
+          "receiptId": "CKemQ3V8dbAAHoSCiRfi8JACZXmxMaDDRX7PVwFJt6Ji",
+          "receiver": "guard.yatimi.testnet",
+          "methods": [
+            "pay"
+          ],
+          "error": "{\"ActionError\":{\"index\":0,\"kind\":{\"FunctionCallError\":{\"ExecutionError\":\"Smart contract panicked: RECIPIENT_NOT_ALLOWED\"}}}}"
+        }
+      ],
+      "transfers": [
+        {
+          "receiptId": "87gH1CaBv4Bxv5SBr2LtL4iKLbJTZQU1Q3YzULUFBiX2",
+          "from": "system",
+          "to": "yatimi.testnet",
+          "amountYocto": "40754410777790700000000",
+          "system": true,
+          "outcome": "confirmed"
+        }
+      ],
+      "returnsFalse": [],
+      "diagnosis": "The trace contains failed execution steps. Inspect each transfer outcome separately.",
+      "free": false,
+      "nextStep": "Preserve this transaction and ask the application owner to reconcile its failed steps. Do not send a replacement payment or restore a budget from the overall status alone.",
+      "limitations": [
+        "Native NEAR transfer actions only; attached deposits and token/bridge settlement are not a wallet balance reconciliation.",
+        "System transfers are shown separately; a system transfer is not automatically labeled a principal refund.",
+        "Data is checked against a configured RPC, not a light-client proof. No automatic retry or refund is authorized."
+      ],
+      "source": {
+        "target": {
+          "network": "testnet",
+          "transactionHash": "BHBBWqBXhp2VVhDhyPQWT2ufxPPDvBN5AfjjDZQVBAhp",
+          "sender": "yatimi.testnet"
+        },
+        "transaction": {
+          "hash": "BHBBWqBXhp2VVhDhyPQWT2ufxPPDvBN5AfjjDZQVBAhp",
+          "sender": "yatimi.testnet",
+          "receiver": "guard.yatimi.testnet",
+          "actions": [
+            {
+              "FunctionCall": {
+                "method_name": "pay",
+                "args": "eyJhbW91bnQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNCIsInJlY2lwaWVudCI6ImF0dGFja2VyLnRlc3RuZXQifQ==",
+                "deposit": "0",
+                "gas": 40000000000000
+              }
+            }
+          ]
+        },
+        "status": {
+          "Failure": {
+            "ActionError": {
+              "index": 0,
+              "kind": {
+                "FunctionCallError": {
+                  "ExecutionError": "Smart contract panicked: RECIPIENT_NOT_ALLOWED"
+                }
+              }
+            }
+          }
+        },
+        "firstReceiptId": "CKemQ3V8dbAAHoSCiRfi8JACZXmxMaDDRX7PVwFJt6Ji",
+        "receipts": [
+          {
+            "id": "87gH1CaBv4Bxv5SBr2LtL4iKLbJTZQU1Q3YzULUFBiX2",
+            "blockHash": "81yEKqjqMMPrTxQmohgFKbZ4w2479zmXMBMhaDm2QkGN",
+            "from": "system",
+            "to": "yatimi.testnet",
+            "actions": [
+              {
+                "Transfer": {
+                  "deposit": "40754410777790700000000"
+                }
+              }
+            ],
+            "status": {
+              "SuccessValue": ""
+            },
+            "children": []
+          },
+          {
+            "id": "CKemQ3V8dbAAHoSCiRfi8JACZXmxMaDDRX7PVwFJt6Ji",
+            "blockHash": "H9h97TXE4cDCEjMbgWeQgPvE5Pm1pSHX1VYnDhWeuMug",
+            "from": "yatimi.testnet",
+            "to": "guard.yatimi.testnet",
+            "actions": [
+              {
+                "FunctionCall": {
+                  "method_name": "pay",
+                  "args": "eyJhbW91bnQiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNCIsInJlY2lwaWVudCI6ImF0dGFja2VyLnRlc3RuZXQifQ==",
+                  "deposit": "0",
+                  "gas": 40000000000000
+                }
+              }
+            ],
+            "status": {
+              "Failure": {
+                "ActionError": {
+                  "index": 0,
+                  "kind": {
+                    "FunctionCallError": {
+                      "ExecutionError": "Smart contract panicked: RECIPIENT_NOT_ALLOWED"
+                    }
+                  }
+                }
+              }
+            },
+            "children": [
+              "87gH1CaBv4Bxv5SBr2LtL4iKLbJTZQU1Q3YzULUFBiX2"
+            ]
+          }
+        ]
+      },
+      "sha256": "901b22a45b1d03673e3e1bed57a3ca4389448160f6b625ccacf813e53d41c9af"
+    },
+    "recoveryRequired": false
+  },
+  "after": {
+    "budget": {
+      "reservedNanos": 240000000,
+      "requests": 24,
+      "authorizedLimitUsd": 1
+    },
+    "balances": {
+      "owner": "6480549821287955400000000",
+      "vault": "3335694184156959000000000",
+      "supplier": "160000000000000000000000"
+    },
+    "vault": {
+      "daily_spent": "40000000000000000000000",
+      "day": "20760",
+      "next_nonce": "6",
+      "owner": "yatimi.testnet",
+      "paused": false,
+      "pending": null,
+      "policy": {
+        "agent_key": "ed25519:54bRSUjTGozbUeM9SCzbUweHi4pgLAJ5bYVEvn6E7JcU",
+        "lifetime_budget": "500000000000000000000000",
+        "per_day": "200000000000000000000000",
+        "per_payment": "100000000000000000000000",
+        "recipients": [
+          "supplier.yatimi.testnet"
+        ]
+      },
+      "total_spent": "60000000000000000000000"
+    }
+  },
+  "verifiedAt": "2026-11-03T15:55:10.405Z",
+  "sourceHashes": {
+    "server/incident-report.mjs": "bf1a35ebcc2c85d249fc6b1d73aee4051029eb5b40d385cd8785ac69a873de61",
+    "server/incident-service.mjs": "aec2ef9952f9fb9990363ba8a5acf260265c834da7347e029d46c548bdedb300",
+    "server/incident-prompt.mjs": "3fc590664b729f98464539a247517fac3f2f3f141f04194b9c9d8c4d9945845b",
+    "server/purchase-workflow.mjs": "060aed21b739c4683e95f2d547775625b273c6fa3b4b0420da7fb6f5c58eff94",
+    "server/payment-proposal.mjs": "9e1fcf8baefaf46e652678ad2a84aa88790e90f39e0907c76f7c3e61cfed126a",
+    "server/ai-client.mjs": "ff4fdc64bbd7f90b020c193893ce4a4abdfff46e0405b7dbea2439500373ad98",
+    "web/live-purchase.mjs": "9afefe68fd1be55df6b9f188b41e3347d377939b77e9ec38758f101fcc2bb66f",
+    "web/incident-result.mjs": "9f02a02de9f51551905a73e06e1d28c87c712e3019065b985a80bf9304f22f4c"
+  }
+}

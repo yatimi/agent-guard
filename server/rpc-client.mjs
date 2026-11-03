@@ -1,8 +1,9 @@
 // Author: Tommy
 export class RpcClient {
-  constructor(endpoint, { timeoutMs = 20000 } = {}) {
+  constructor(endpoint, { timeoutMs = 20000, maxResponseBytes = 2000000 } = {}) {
     this.endpoint = endpoint;
     this.timeoutMs = timeoutMs;
+    this.maxResponseBytes = maxResponseBytes;
   }
 
   async call(method, params) {
@@ -12,7 +13,13 @@ export class RpcClient {
       body: JSON.stringify({ jsonrpc: '2.0', id: 'agentguard', method, params }),
     });
     if (!response.ok) throw new Error(`RPC HTTP ${response.status}`);
-    const body = await response.json();
+    const chunks = []; let size = 0;
+    for await (const chunk of response.body) {
+      size += chunk.length;
+      if (size > this.maxResponseBytes) throw new Error('RPC_RESPONSE_TOO_LARGE');
+      chunks.push(chunk);
+    }
+    const body = JSON.parse(Buffer.concat(chunks).toString('utf8'));
     if (body.error) {
       const error = new Error(`RPC ${body.error.cause?.name ?? body.error.name ?? body.error.code}`);
       error.rpcError = body.error;

@@ -31,7 +31,7 @@ No agent receives either full-access key. Never put secrets in public code, brow
 ## Explicit limits
 
 - Testnet prototype, not an audit or production financial product.
-- Native NEAR transfers only. No arbitrary contract calls, FT tokens, NEAR Intents, mainnet transactions or trustless purchase fulfillment.
+- Payments: native testnet NEAR only; no arbitrary contract calls, FT payments, NEAR Intents, mainnet signing or trustless fulfillment. Diagnosis may read mainnet or testnet Transfer/FunctionCall traces, but does not reconcile token balances or attached deposits.
 - A permitted supplier can still provide bad data. Allowlisting is not proof of service quality or fraud detection.
 - The agent can intentionally use its allowed budget and gas. Configure a gas allowance as well as principal caps.
 - UTC-day caps allow up to two daily budgets close to midnight. Lifetime budget remains in force.
@@ -49,7 +49,7 @@ Keychain signing uses the offline CLI path deliberately. Version 0.30.1's online
 
 ## Before a public demo
 
-Verify failed-transfer refunds and concurrent-payment behavior through the runtime. Add real agent task execution and trace ingestion. Review dependencies. Keep receipts distinct from local simulation exports. A recorded verification run does not constitute an independent security audit.
+The isolated runtime verifies failed-transfer refunds and competing payments; see [scope and fault-injection limits](docs/RUNTIME-QA.md). Keep the existing paid-task trace distinct from recorded and simulated evidence. Review dependencies. Keep receipts distinct from local simulation exports. A recorded verification run does not constitute an independent security audit.
 
 ## References
 
@@ -64,4 +64,26 @@ The model proposes one exact invoice; it cannot select CLI arguments, RPC endpoi
 
 The server is loopback-only, requires an exact Host and Origin plus a random session token on POST, and exposes no raw CLI output, private keys or model reasoning. Browser rendering uses text nodes for model output. These controls do not protect against a malicious local process or an owner who changes server code.
 
-Our supplier and local journal are trusted. Invoice IDs and dataset hashes are bound locally; the contract does not attest delivery or independently verify data quality. The source is public mainnet RPC, while payment is testnet. A failed AI summary leaves the paid data accessible without another payment. Unknown/failed transaction outcomes require operator inspection; there is no automatic rebroadcast, cancellation or refund path.
+Our supplier and local journal are trusted. Invoice IDs, selected transaction targets and report hashes are bound locally; the contract does not attest delivery or independently verify data quality. Diagnostic sources are fixed public mainnet/testnet RPCs, while every service payment is testnet. The report is deterministically reconstructed and the normalized FINAL source fetched again before signing and delivery. This trusts RPC, not a light-client proof. A failed AI draft leaves the verified report accessible. After settled payment, incomplete delivery preserves proof and blocks a new fee until reconciled. Unknown service-payment outcomes require operator inspection; there is no automatic rebroadcast, cancellation or refund path.
+
+## Fixed model and executor evaluation
+
+The historical block-snapshot purchase and security benchmark share their original prompt builder. The current transaction-diagnosis flow uses a separate `incident-v1` prompt and the same exact-invoice validator/model parameters; the old benchmark does not establish behavior of this new prompt. One historical fixed pass over 4 benign and 11 malicious supplier responses kept the approved invoice in every case. The model did not produce an observed attacker-requested deviation, so this is not evidence of containing a successful live compromise. Separately forced proposals verify the validator boundary; recorded testnet calls verify the key and contract boundary. See [the full evaluation](docs/SECURITY-BENCHMARK.md) and its limitations.
+
+The contract checks recipient and spending policy, not invoice identity or exact quoted price. An injected price increase that remains within all contract caps needs the trusted local invoice validator to stop it. Invoice IDs and dataset hashes are local bindings; they are not contract-enforced delivery proofs.
+
+## Local concurrency review
+
+Four agent reviewers covered Rust/NEAR contracts, workflow/browser regressions, end-to-end security, and reliability. Confirmed local defects were fixed and re-reviewed: stale-lock mutual exclusion, incomplete lock publication, missing daily/liquid preflight checks, and lost recovery references across browser tabs. This was an agent-assisted source review, not a professional independent audit or proof of the absence of vulnerabilities.
+
+Six child-process lock tests cover competing stale owners, reservation conservation across eight processes, publication failure and crashes. All lock publications now use the same exclusive acquisition guard. A crash while holding that guard requires operator inspection with writers stopped; it is deliberately not automatically reclaimed. Existing journal durability tests cover process death, not machine/power failure. See [review evidence and limits](docs/REVIEW-QA.md).
+
+## Isolated runtime and failure evidence
+
+Five local sandbox tests now execute compiled WASM. Failed native transfers restore principal budgets while consuming nonce, and a competing payment reaches `PAYMENT_IN_FLIGHT`. Protocol tests cover method/receiver permission, allowance exhaustion and actual key revocation. A patched previous-day bucket checks accounting through unchanged WASM; a separately identified low-gas callback artifact checks the already-paid-but-unsettled boundary. The latter retains pending/budget and rejects another payment. Neither injection is claimed as an observed failure of the production artifact. [Full scope and receipts](docs/RUNTIME-QA.md).
+
+## Incident-report boundary
+
+The input accepts exactly network, sender and transaction hash; never a caller-controlled RPC URL. Admission validates primitive string identifiers/amounts, complete receipt-body/outcome coverage, rooted creation graph and returned-status chains. Limits include 128 receipts, 32 actions per receipt, a 2 MB RPC response and ten-second diagnostic fetches. Unsupported actions fail closed. Native Transfer outcomes stay separate from system transfers, attached deposits and token/bridge meaning; a later receipt failure does not undo a locally successful transfer.
+
+An inspection is single-use for payment, even if a caller changes the request UUID. Recoverable references carry the original inspection ID. A completed quote is not reused to start another charge. Hashes establish local consistency with the fetched source, not honesty of the RPC or supplier. AI prose remains untrusted, optional and labeled for human review; its requested word limit is not a deterministic guarantee. [Incident tests, review closure and live evidence](docs/INCIDENT-QA.md).

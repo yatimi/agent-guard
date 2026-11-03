@@ -54,7 +54,7 @@
   color-scheme:light;
   --bg:#f7f8fa;
   --ink:#192720;
-  --muted:#68746e;
+  --muted:#59665e;
   --line:#dde4de;
   --green:#175c3d;
   --lime:#d3fa73;
@@ -295,7 +295,7 @@ h1 span {
 }
 
 .pill.muted {
-  color:#6c756e;
+  color:var(--muted);
   background:#f6f7f4;
   border-color:#e6e9e1;
 }
@@ -325,7 +325,7 @@ h1 span {
 
 .vault-total p {
   font-size:10px;
-  color:#79847d;
+  color:var(--muted);
   margin:8px 0 0;
 }
 
@@ -479,7 +479,7 @@ progress::-moz-progress-bar {
 .scenario>span {
   display:block;
   font:9px var(--mono);
-  color:#78886d;
+  color:#596c4e;
   margin-bottom:10px;
 }
 
@@ -571,7 +571,7 @@ progress::-moz-progress-bar {
 .honesty {
   font-size:9px;
   line-height:1.6;
-  color:#768179;
+  color:var(--muted);
   margin:12px 22px 19px;
 }
 
@@ -706,7 +706,7 @@ progress::-moz-progress-bar {
 
 .principles>div>span {
   font:9px var(--mono);
-  color:#76846c;
+  color:#596c4e;
   letter-spacing:1px;
 }
 

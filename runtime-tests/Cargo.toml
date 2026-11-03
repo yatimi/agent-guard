@@ -1,0 +1,19 @@
+# Author: Tommy
+[package]
+name = "agent-guard-runtime-tests"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+
+# Isolated from the contract workspace and its production lockfile.
+[workspace]
+
+[dev-dependencies]
+near-workspaces = { version = "=0.24.0", features = ["experimental"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
+serde_json = "=1.0.154"
+sha2 = "=0.10.9"
+# Already pinned transitive Workspaces types, exposed here for explicit FINAL waits.
+near-jsonrpc-primitives = "=0.38.0"
+near-primitives = "=0.38.0"

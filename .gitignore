@@ -10,3 +10,15 @@ node_modules/
 *.pem
 *credentials*.json
 submission*.json
+
+# QA screenshots must be kept outside the checkout; prevent accidental commits.
+/docs/preview.jpg
+**/screenshots/
+**/browser-qa/
+**/browser-live-qa/
+[Ss]creenshot*.png
+[Ss]creenshot*.jpg
+[Ss]creenshot*.jpeg
+
+# Standalone runtime test workspace build output.
+/runtime-tests/target/

@@ -4,6 +4,8 @@ import { mkdir } from 'node:fs/promises';
 import { withFileLock } from './file-lock.mjs';
 import { readJson, writeJson } from './json-file.mjs';
 
+export const inferenceParameters = Object.freeze({ max_tokens: 768, temperature: 0, reasoning_effort: 'low', thinking_token_budget: 64 });
+
 export class AiClient {
   constructor({ apiKey, stateDirectory, endpoint = 'https://cloud-api.near.ai/v1', model = 'z-ai/glm-5.3-flash', timeoutMs = 45000 }) {
     this.apiKey = apiKey?.trim();
@@ -24,11 +26,10 @@ export class AiClient {
     if (prices.some(value => typeof value !== 'string' || !value.trim())) throw new Error('Model pricing is unavailable.');
     const rates = prices.map(Number);
     if (rates.some(value => !Number.isFinite(value) || value < 0)) throw new Error('Model pricing is unavailable.');
-    const payload = { model: this.model, messages, max_tokens: 768, temperature: 0,
-      reasoning_effort: 'low', thinking_token_budget: 64, ...(tools ? { tools, tool_choice: 'auto' } : {}) };
+    const payload = { model: this.model, messages, ...inferenceParameters, ...(tools ? { tools, tool_choice: 'auto' } : {}) };
     const body = JSON.stringify(payload);
     if (Buffer.byteLength(body) > 18000) throw new Error('Model input is too large.');
-    const upperBound = ((Buffer.byteLength(body) + 4096) * rates[0] + 768 * rates[1] + rates[2]) * 1e9;
+    const upperBound = ((Buffer.byteLength(body) + 4096) * rates[0] + inferenceParameters.max_tokens * rates[1] + rates[2]) * 1e9;
     if (upperBound > 10000000) throw new Error('Model request exceeds the per-attempt budget.');
     await mkdir(this.stateDirectory, { recursive: true, mode: 0o700 });
     // The same ledger is used by the CLI smoke check. Hold reservations after errors.

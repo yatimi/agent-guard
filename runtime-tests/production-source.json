@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "deployedWasmSha256": "976f990b5f8a1a6e39de6e742cea4cadb515c5e6de17169a4f4325fd184d345e",
+  "wasmToolchain": "1.86.0",
+  "sources": {
+    "Cargo.toml": "80f3ca12d600b22f237a9867ffcfbf624cb57787a47b1450a387a200b3ecfcf1",
+    "Cargo.lock": "668ed3340526159e03903058a5585875d94737b0f47f5b9eb97b0ebfddb64cdf",
+    "rust-toolchain.toml": "c1c0481fa50191129a0b58c5dfb220b7b9121a2a217f578872b8531601a15a9b",
+    "contract/Cargo.toml": "f538ece0199ed8bcc2d0d6e4ffcddbc10ce9abd4fdb89951e0be0de52402ce1f",
+    "contract/src/lib.rs": "470bb105f7fd54ee34603c96435cc563f16d293019b5235f1fdffb04531927be",
+    "contract/src/policy.rs": "d5c4f7461c176a45a30fad32c53f82380610f941a2a8bbfc58713c1f419ea600",
+    "contract/src/pending_payment.rs": "1c46b786f1be22c170600ce88b8eab79ad1cc6c597e28b0e7e2fbe7d6e2642ac"
+  }
+}
