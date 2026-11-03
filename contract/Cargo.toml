@@ -1,0 +1,17 @@
+# Author: Tommy
+[package]
+name = "agent-guard"
+version = "0.1.0"
+edition = "2021"
+authors = ["Tommy"]
+license = "MIT"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+near-sdk = "=5.17.2"
+
+[dev-dependencies]
+near-sdk = { version = "=5.17.2", features = ["unit-testing"] }

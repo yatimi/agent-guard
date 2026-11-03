@@ -1,0 +1,12 @@
+# Author: Tommy
+/target/
+/.local/
+.env
+.env.*
+!.env.example
+node_modules/
+.DS_Store
+*.key
+*.pem
+*credentials*.json
+submission*.json

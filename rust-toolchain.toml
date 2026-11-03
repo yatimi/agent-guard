@@ -1,0 +1,5 @@
+# Author: Tommy
+[toolchain]
+channel = "1.99.1"
+profile = "minimal"
+components = ["rustfmt", "clippy"]

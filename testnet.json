@@ -1,0 +1,9 @@
+{
+  "network": "testnet",
+  "owner": "yatimi.testnet",
+  "vault": "guard.yatimi.testnet",
+  "supplier": "supplier.yatimi.testnet",
+  "ownerPublicKey": "ed25519:6bcr6bNcZpVDebveJwqDy2Ecc4jfThypSRqMJeHyhKuZ",
+  "agentPublicKey": "ed25519:54bRSUjTGozbUeM9SCzbUweHi4pgLAJ5bYVEvn6E7JcU",
+  "deploymentTransaction": "2CdQDvRLEpJfQ9H87V5gFzjWKXpEwVH2oZcmCfXEm5vM"
+}

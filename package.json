@@ -1,0 +1,17 @@
+{
+  "name": "agent-guard",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Tommy",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test web/*.test.mjs",
+    "test:contract": "cargo test --workspace --locked",
+    "build:contract": "cargo +1.86.0 build -p agent-guard --target wasm32-unknown-unknown --release --locked",
+    "test:testnet": "node scripts/verify-testnet.mjs",
+    "test:testnet:send": "node scripts/verify-testnet.mjs --send",
+    "check:ai": "node scripts/check-near-ai.mjs",
+    "check:ai:send": "node --env-file=.env scripts/check-near-ai.mjs --send"
+  }
+}
