@@ -13,7 +13,13 @@ const output = await mkdtemp(join(temporaryRoot, 'agentguard-user-study-'));
 for (const dir of ['sources', 'facilitator']) await mkdir(join(output, dir));
 const runtime = JSON.parse(await readFile(new URL('../docs/runtime-verification.json', import.meta.url)));
 const live = JSON.parse(await readFile(new URL('../docs/live-incident-purchase.json', import.meta.url)));
-const { cases } = await demoCases();
+const demo = await demoCases();
+// Keep the established three-ticket protocol stable as the demo grows.
+const cases = ['callback-gas-fault', 'failed-transfer', 'paid-testnet'].map(id => {
+  const item = demo.cases.find(candidate => candidate.id === id);
+  if (!item) throw new Error(`Missing study case: ${id}`);
+  return item;
+});
 const tickets = [
   'The application showed a payment error. Did native NEAR move, and what should support check before the customer tries again?',
   'The final result contains a successful callback returning false. Was the native transfer successful? Can support promise a refund or retry?',

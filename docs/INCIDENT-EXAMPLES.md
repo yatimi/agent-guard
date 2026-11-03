@@ -1,7 +1,15 @@
 <!-- Author: Tommy -->
 # Evidence examples for the transaction diagnosis task
 
-Three cases checked on 2026-11-03 illustrate the selected [paid support task](PRODUCT.md). They are source-based examples for product design, not reports from an implemented diagnostic purchase. [Machine-readable evidence and fresh RPC response](incident-product-evidence.json).
+The examples below distinguish public mainnet observations, controlled Sandbox cases and historical testnet purchases. They illustrate the [paid support task](PRODUCT.md); they do not establish customer demand or time saved.
+
+## Mainnet: successful result with a failed step
+
+Transaction `2KhhB1uDScGCFQfVchep7DiZTGTxMcgfUYHNzwf5e6uL` returned `SuccessValue`, but `ft_on_transfer` on `v2.ref-finance.near` failed with `E51: contract paused`. The `ft_resolve_transfer` receipt on `wrap.near` returned successfully. Two reads of the public archival RPC on 2026-11-03 matched; the unchanged AgentGuard parser verified all six receipts.
+
+**Support conclusion:** a successful overall return is not proof that the requested operation completed. Preserve the failed receipt and ask the application owner to reconcile the order and token state. This report does not establish a token refund or token balance.
+
+[Exact fields, reproduction and limits](MAINNET-CASE.md) · [Recorded RPC evidence](mainnet-incident-evidence.json). No model or diagnostic payment was used to capture this example. The following original examples retain their earlier provenance: [original product evidence](incident-product-evidence.json).
 
 ## Transfer succeeded and callback failed
 

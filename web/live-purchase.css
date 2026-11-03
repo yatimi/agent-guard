@@ -66,3 +66,10 @@ select:focus-visible, summary:focus-visible { outline: 3px solid #537f17; outlin
 .incident-handoff textarea:focus-visible { outline: 3px solid #537f17; outline-offset: 4px; }
 
 [data-demo-cases] button[aria-pressed="true"] { background: #e3edda; border-radius: 8px; box-shadow: inset 0 0 0 1px #537f17; }
+
+.receipt-evidence { margin: 20px 0; }
+.receipt-summary { font-weight: 600; }
+.receipt-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 13px; }
+.receipt-table caption { text-align: left; padding: 12px 0; }
+.receipt-table th, .receipt-table td { padding: 12px 8px; text-align: left; vertical-align: top; border-bottom: 1px solid #cbd6c1; overflow-wrap: anywhere; }
+.receipt-table th:first-child { width: 36%; }

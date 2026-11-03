@@ -1,9 +1,11 @@
 // Author: Tommy
 import { formatNear } from './vault.mjs';
 import { incidentHandoff } from './incident-handoff.mjs';
+import { renderReceiptEvidence } from './receipt-evidence.mjs';
 const node = (tag, text) => { const e = document.createElement(tag); e.textContent = text; return e; };
 export function renderIncident(container, report, summary, fee, options = {}) {
   container.append(node('h3', options.heading || (fee ? 'Your transaction diagnosis' : 'Free transaction result')), node('p', report.diagnosis));
+  renderReceiptEvidence(container, report);
   const handoff = incidentHandoff(report, options.provenance);
   const decision = node('section', ''); decision.className = 'incident-decision'; decision.setAttribute('aria-label', 'Payment decision');
   decision.append(node('h4', 'Should the customer pay again?'), node('strong', handoff.headline), node('p', handoff.nextCheck));

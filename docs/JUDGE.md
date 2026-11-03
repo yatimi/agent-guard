@@ -16,6 +16,7 @@ Open **http://127.0.0.1:4174**. Stop with Ctrl-C. `npm run dev` is an alias for 
 
 | Action | Expected observation | What it establishes |
 | --- | --- | --- |
+| Select **Mainnet: successful result, failed step** | Successful overall return, failed `ft_on_transfer`, successful resolver; source comparison | Recorded real mainnet execution, no token-refund/balance conclusion |
 | Select **Transfer confirmed, callback failed** | A confirmed native transfer and separate failed `settle` receipt | Deterministic interpretation of recorded Sandbox fault receipts; not a production callback failure |
 | Select **Transfer failed, callback returned false** | Failed native transfer survives the callback's successful return | Top-level success alone is insufficient to establish transfer success |
 | Select **Completed testnet purchase** | Report with `RECIPIENT_NOT_ALLOWED`, distinct diagnostic-fee link, human-review draft | Replays a previously verified real purchase; does not make a new payment |
@@ -24,7 +25,7 @@ Open **http://127.0.0.1:4174**. Stop with Ctrl-C. `npm run dev` is an alias for 
 | Run **Recipient injection** in the lab | `RECIPIENT_NOT_ALLOWED`, unchanged simulated balance | Browser teaching model; actual enforcement is tested separately in Rust/Sandbox |
 | Run **Valid purchase**, **Budget breach**, **Replay attack**, pause | Allowed payment or the relevant rejection | Local interactive policy examples, explicitly labeled simulation |
 
-The two Sandbox cases are rebuilt from `docs/runtime-verification.json`; the callback fault used a separately hashed low-gas WASM. The recorded purchase is `docs/live-incident-purchase.json`. Sources and relevant limitations are visible on screen. AI prose is a past, untrusted draft; deterministic facts and source checks are separate.
+The mainnet case is rebuilt from `docs/mainnet-incident-evidence.json` and checked against its captured result/source hashes. The two Sandbox cases are rebuilt from `docs/runtime-verification.json`; the callback fault used a separately hashed low-gas WASM. The recorded purchase is `docs/live-incident-purchase.json`. Sources and relevant limitations are visible on screen. AI prose is a past, untrusted draft; deterministic facts and source checks are separate.
 
 ## Verification layers
 

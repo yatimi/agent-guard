@@ -9,7 +9,7 @@ const choices = document.querySelector('[data-demo-cases]');
 function show(item) {
   for (const button of choices.children) button.setAttribute('aria-pressed', String(button.dataset.case === item.id));
   status.textContent = item.title; description.textContent = item.explanation;
-  source.replaceChildren(node('p', `Recorded ${item.provenance.network === 'local-sandbox' ? 'local NEAR Sandbox' : 'testnet'} evidence · ${item.provenance.source}. This replay does not query the chain.`));
+  source.replaceChildren(node('p', `Recorded ${item.provenance.network === 'local-sandbox' ? 'local NEAR Sandbox' : item.provenance.network} evidence · ${item.provenance.source}. This replay does not query the chain.`));
   result.replaceChildren();
   if (item.fee) {
     const fee = node('a', 'Recorded diagnostic fee · testnet ↗');

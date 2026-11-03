@@ -17,7 +17,29 @@ let tab;
 try {
   tab = await browserTab(); const { call, evaluate, until, events } = tab;
   await call('Page.enable'); await call('Runtime.enable'); await call('Network.enable'); await call('Page.bringToFront');
-  await call('Page.navigate', { url: base }); await until(`document.querySelectorAll('[data-demo-cases] button').length===3`);
+  await call('Page.navigate', { url: base }); await until(`document.querySelectorAll('[data-demo-cases] button').length===4`);
+  assert.ok(await evaluate(`document.querySelector('[data-demo-source]').textContent.includes('Recorded mainnet evidence')`));
+  assert.ok(await evaluate(`document.querySelector('.receipt-summary').textContent.includes('Returned successfully. Failed receipts: 1 of 6')`));
+  assert.ok(await evaluate(`document.querySelector('[data-demo-result]').textContent.includes('E51: contract paused')`));
+  assert.equal(await evaluate(`document.querySelector('[data-demo-result] a[href*="nearblocks"]').hostname`), 'nearblocks.io');
+  assert.ok(await evaluate(`document.querySelector('.incident-handoff textarea').value.includes('does not establish the complete wallet balance, token delivery')`));
+  await evaluate(`document.querySelector('.receipt-evidence summary').focus()`);
+  await call('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r' });
+  await call('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  assert.ok(await evaluate(`document.querySelector('.receipt-evidence details').open`));
+  assert.ok(await evaluate(`document.querySelector('.receipt-table').textContent.includes('ft_resolve_transfer')`));
+  assert.equal(await evaluate(`document.activeElement.textContent`), 'Compare with source receipt fields');
+  for (const width of [1440, 390, 320]) {
+    await call('Emulation.setDeviceMetricsOverride', { width, height: 1050, deviceScaleFactor: 1, mobile: false });
+    assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
+    if (width !== 320) {
+      await evaluate(`document.querySelector('.receipt-evidence').scrollIntoView({block:'start'})`);
+      const shot = await call('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
+      await writeFile(resolve(output, `mainnet-evidence-${width}.png`), Buffer.from(shot.data, 'base64'));
+    }
+  }
+  console.log('PASS real mainnet evidence, keyboard comparison, correct explorer and token-scope limits');
+  await evaluate(`document.querySelector('[data-case="callback-gas-fault"]').click()`);
   assert.ok(await evaluate(`document.querySelector('[data-demo-result]').textContent.includes('confirmed native transfer')`));
   assert.equal(await evaluate(`document.querySelector('[data-live-start]')`), null);
   assert.equal(await evaluate(`document.querySelector('[data-demo-result] a[href*="nearblocks"]')`), null);
@@ -49,8 +71,9 @@ try {
   await until(`document.querySelector('[data-demo-result]').textContent.includes('RECIPIENT_NOT_ALLOWED')`);
   assert.equal(await evaluate(`document.querySelectorAll('[data-demo-result] a[href*="nearblocks"]').length`), 2);
   assert.ok(await evaluate(`document.querySelector('.incident-decision').textContent.includes('not established')`));
-  console.log('PASS three recorded cases switch and paid case separates target and fee');
-  await call('Page.reload'); await until(`document.querySelectorAll('[data-demo-cases] button').length===3`);
+  console.log('PASS recorded cases switch and paid case separates target and fee');
+  await call('Page.reload'); await until(`document.querySelectorAll('[data-demo-cases] button').length===4`);
+  await evaluate(`document.querySelector('[data-case="callback-gas-fault"]').click()`);
   for (const width of [1440, 390, 320]) {
     await call('Emulation.setDeviceMetricsOverride', { width, height: 1050, deviceScaleFactor: 1, mobile: false });
     assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true);
@@ -62,7 +85,8 @@ try {
   if (!await evaluate('document.documentElement.scrollWidth <= innerWidth')) console.log('Text reflow overflow:', await evaluate(`[...document.querySelectorAll('body *')].filter(e=>{const r=e.getBoundingClientRect();return r.width&&r.right>innerWidth+1}).map(e=>({tag:e.tagName,cls:e.className,text:e.textContent.slice(0,70),width:e.getBoundingClientRect().width})).slice(0,20)`));
   assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'), true, '200% text at 320px must reflow');
   assert.ok(await evaluate(`document.querySelector('.incident-handoff textarea').value.includes('No replacement payment')`));
-  await call('Page.reload'); await until(`document.querySelectorAll('[data-demo-cases] button').length===3`);
+  await call('Page.reload'); await until(`document.querySelectorAll('[data-demo-cases] button').length===4`);
+  await evaluate(`document.querySelector('[data-case="callback-gas-fault"]').click()`);
   console.log('PASS open result details and all computed text sizes doubled at 320px');
   for (const width of [1440, 390]) {
     await call('Emulation.setDeviceMetricsOverride', { width, height: 1050, deviceScaleFactor: 1, mobile: false });

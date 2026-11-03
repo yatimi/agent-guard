@@ -7,12 +7,13 @@ Draft recording script; video and X post are not yet published. Target duration 
 
 | Time | Screen/action | Narration |
 | --- | --- | --- |
-| 0–15s | AgentGuard, recorded callback-failure example | “A NEAR support engineer receives a payment error. Should the customer pay again? A failed callback alone cannot answer that.” |
-| 15–40s | Confirmed transfer, failed step, next check, copy handoff | “This recorded Sandbox case confirms the transfer even though its callback failed. AgentGuard separates the receipt outcomes and prepares a source-backed handoff for review. It does not authorize a replacement payment.” |
-| 40–65s | Completed testnet purchase; target and diagnostic-fee links | “The agent can buy one diagnosis within an approved quote. This is a recorded real testnet purchase: the fee and the investigated transaction have different hashes. The owner keeps the administrative key.” |
-| 65–85s | Free lab: recipient injection and decision | “If a proposed payment changes the destination, the guard rejects it. This interactive view is a teaching simulation. Real key and contract enforcement is checked separately in testnet and compiled-WASM tests.” |
-| 85–105s | Current evaluation summary and verification command | “In our fixed current-prompt test, all eleven malicious inputs left the invoice unchanged. Separately forced proposals were rejected. Anyone can replay the evidence and run the checks without our keys.” |
-| 105–120s | Project/repository and one limitation | “One support task, a bounded payment, and evidence you can inspect. External-user time savings and willingness to pay are still being tested.” |
+| 0–15s | Default recorded mainnet case: overall return + failed count | “A customer asks whether to pay again. This real NEAR transaction returned successfully, but one execution step failed.” |
+| 15–35s | Expand source comparison; show failed call and resolver; support handoff | “The receiving contract was paused. The resolver ran. AgentGuard makes these receipt outcomes explicit and prepares a handoff, without claiming a token refund.” |
+| 35–50s | Recorded Sandbox callback-failure case | “The reverse can happen too: this labeled fault test confirms a native transfer before the callback fails. An overall error alone cannot authorize another payment.” |
+| 50–75s | Completed testnet purchase; separate target and diagnostic-fee links | “The support agent can buy one diagnosis. The exact invoice is checked locally; the restricted key and vault constrain its payment. This is a recorded real testnet purchase.” |
+| 75–95s | Recipient-injection lab; separate testnet enforcement evidence | “This simulation rejects a changed destination. The repository separately includes real key/contract checks and compiled-WASM failure tests. We do not claim the model was compromised.” |
+| 95–110s | Verification command and recovery evidence link | “Judges can replay every example without our keys. Interrupted purchases reconcile the original fee; they do not create another one.” |
+| 110–120s | Repository and scope | “One support task, bounded agent spending, and inspectable evidence. Testnet prototype; external-user time savings and willingness to pay remain unvalidated.” |
 
 Do not call the lab a real model jailbreak, the Sandbox fault a production incident, or the recorded purchase a newly executed payment. Do not claim a marketplace, audited production security or validated demand. Show the handoff and real evidence before optional architecture detail.
 
@@ -28,4 +29,4 @@ Attach the finished video and confirm the final text before the owner publishes 
 
 “We're testing AgentGuard, a prototype for investigating NEAR payment incidents. Could you spend 20–30 minutes on three recorded support tickets? No wallet, keys or payment needed. We want to learn whether it improves on your current tools, including when it does not help. The session is not recorded unless you agree.”
 
-The owner chooses recipients and sends invitations. Preparation is available in [USER-VALIDATION.md](USER-VALIDATION.md); no participants have been contacted by the project scripts.
+External testing is optional and does not block submission. If the owner chooses to recruit, the owner selects recipients and sends invitations. Preparation is available in [USER-VALIDATION.md](USER-VALIDATION.md); no participants have been contacted by the project scripts.

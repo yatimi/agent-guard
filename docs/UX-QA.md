@@ -1,6 +1,12 @@
 <!-- Author: Tommy -->
 # Scoped UI/UX and accessibility review
 
+## Mainnet evidence and support workflow pass — 2026-11-03
+
+The default recorded demo now opens a real mainnet example: successful overall return with a failed nested execution step. The first-screen text identifies the support task and bounded diagnostic budget. The result shows the overall status beside failed-receipt count; a native disclosure opens a semantic table of non-system receipt fields with exact IDs. Text explains that rows are ordered by ID, not time, and does not infer token refunds/balances.
+
+Verified: 28 live-flow Chrome fixtures and seven recorded-demo groups, including mainnet provenance/explorer, keyboard activation of source comparison with focus retained, checked handoff, old-case switching, mobile reflow, 200% computed-font reflow for the open Sandbox result, and no outbound requests from demo. Inspected mainnet comparison captures at 1440px and 390px; artifacts remain only in OS temp. The chosen three-ticket study protocol stays stable when demo cases are added. This is a scoped review, not a complete screen-reader/assistive-technology session or accessibility certification.
+
 ## Current incident-support pass — 2026-11-03
 
 The selected user is now a NEAR application developer/support engineer. The result leads with “Should the customer pay again?”, followed by a conservative next manual check. A copyable support handoff uses checked transfer/failure facts only, separate from optional AI prose. Exact amounts, receipt IDs, observation time, report hash and recorded Sandbox labels are retained. It makes no complete balance, refund or retry authorization claim.

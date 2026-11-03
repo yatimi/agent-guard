@@ -5,17 +5,17 @@
 
 ### Give agents a budget. Keep control.
 
-A spending vault on NEAR for agents you don't trust with your whole wallet.
+A NEAR support agent can buy a transaction diagnosis within your spending rules.
 
 [Judge quick start](#judge-quick-start) · [Testnet evidence](web/testnet-evidence.json) · [Security model](SECURITY.md)
 
 </div>
 
-An agent finds a supplier, reads a response, and decides to pay. Hidden inside that response is another instruction: send the money somewhere else.
+A customer reports a payment error and asks whether to pay again. The support engineer needs the individual receipt outcomes: an overall successful return can hide a failed step, and a later callback failure can leave an earlier transfer intact.
 
-The model might follow it. The vault shouldn't.
+AgentGuard combines this support task with constrained agent spending. The agent proposes one diagnostic fee; a local validator checks the exact invoice, a restricted key can call only `pay`, and the NEAR vault enforces allowed recipients and budgets. The report and support handoff use checked receipt facts. Recovery keeps the original fee transaction.
 
-AgentGuard puts spending rules in a NEAR contract. The agent gets a key that can call one payment method. The owner chooses the recipients and budgets, keeps the administrative key, and can pause payments.
+Try the recorded mainnet case: **a successful return, a failed `ft_on_transfer`, and a resolver that still ran**. No keys, wallet or payment are needed. [Source fields compared with the report](docs/MAINNET-CASE.md) · [User, alternatives and value hypothesis](docs/POSITIONING.md).
 
 ## What it does
 
@@ -24,7 +24,7 @@ AgentGuard puts spending rules in a NEAR contract. The agent gets a key that can
 - Prevents an accepted request from paying twice, including after a failed transfer.
 - Keeps administrative controls out of the agent's hands.
 
-The contract is deployed at **`guard.yatimi.testnet`**. Its deployed WASM was matched to the recorded Mac build; fresh builds have a separate provenance record. **Eight real-network checks passed**, alongside **20 Rust unit tests**, **98 JavaScript tests**, and **five isolated WASM runtime tests**. [Runtime evidence and injected-case boundaries](docs/RUNTIME-QA.md).
+The contract is deployed at **`guard.yatimi.testnet`**. Its deployed WASM was matched to the recorded Mac build; fresh builds have a separate provenance record. **Eight real-network checks passed**, alongside **20 Rust unit tests**, **99 JavaScript tests**, and **five isolated WASM runtime tests**. [Runtime evidence and injected-case boundaries](docs/RUNTIME-QA.md).
 
 [Inspect a successful payment](https://explorer.testnet.near.org/transactions/SW9ntYJ5oRY6QsDwzFdSY61Cc5WPgtSAkeJaz3umN44) · [Inspect a blocked recipient](https://explorer.testnet.near.org/transactions/3ZL2bZoLX3NoanvmfKRcCu5NxaD1ayfPfLArSCz4geFe)
 
@@ -32,7 +32,7 @@ The contract is deployed at **`guard.yatimi.testnet`**. Its deployed WASM was ma
 
 The paid workflow targets NEAR application developers handling support tickets: an agent buys a bounded diagnosis of one transaction and returns the failed execution step, native transfer outcomes, evidence and a support-response draft. A finalized trace without a failed receipt returns a free result. The diagnostic fee has its own invoice and spending limits; investigating a failure never authorizes a replacement payment.
 
-[Product decision and acceptance criteria](docs/PRODUCT.md) · [Three checked examples](docs/INCIDENT-EXAMPLES.md). The full browser purchase is [recorded and verified](docs/live-incident-purchase.json). External-user demand has not yet been validated. [Three-ticket pilot and scoring protocol](docs/USER-VALIDATION.md); prepare the anonymous materials with `npm run study:prepare`.
+[Product decision and acceptance criteria](docs/PRODUCT.md) · [Checked examples, including mainnet](docs/INCIDENT-EXAMPLES.md). The full browser purchase is [recorded and verified](docs/live-incident-purchase.json). External-user demand has not yet been validated. [Three-ticket pilot and scoring protocol](docs/USER-VALIDATION.md); prepare the anonymous materials with `npm run study:prepare`.
 
 ## Where we are
 
@@ -55,14 +55,15 @@ npm run demo
 
 Open **http://127.0.0.1:4174**. `npm run dev` starts the same safe recorded demo.
 
-1. **Transfer confirmed, callback failed**: inspect the confirmed native transfer and separate failed settlement callback. This is a clearly labeled local Sandbox fault fixture.
-2. **Transfer failed, callback returned false**: inspect the failed transfer despite a successful callback return. This is another recorded Sandbox execution.
-3. **Completed testnet purchase**: view the delivered incident report, human-review AI draft and separate historical diagnostic-fee transaction. Replaying it sends nothing.
-4. In **Free security simulation**, run **Recipient injection**: the local model returns `RECIPIENT_NOT_ALLOWED`. Valid purchase, budget breach, replay and pause controls exercise other teaching scenarios.
+1. **Mainnet: successful result, failed step**: inspect `Returned successfully` beside `Failed receipts: 1 of 6`. Expand **Compare with source receipt fields** to see the failed call and successful resolver. This is archived public mainnet execution, not a new purchase or token-refund verification.
+2. **Transfer confirmed, callback failed**: inspect the confirmed native transfer and failed settlement in a labeled Sandbox fault fixture.
+3. **Transfer failed, callback returned false**: inspect a failed native transfer despite a successful callback return, from recorded Sandbox execution.
+4. **Completed testnet purchase**: view the checked report, human-review AI draft and separate historical diagnostic-fee transaction. Replaying sends nothing.
+5. Copy the support handoff or download the evidence. In **Free security simulation**, run **Recipient injection** to exercise a teaching model; real contract enforcement has separate testnet/WASM evidence.
 
 The demo serves only local public recordings and static assets. It recomputes incident facts from receipts, refuses live API mutations and neither imports the wallet/model clients nor reads `.env` or `.local`. Sandbox receipt hashes are not linked to public explorers. Downloads retain recorded-source provenance. Simulation and recorded evidence do not claim a fresh chain or model run.
 
-`npm run verify` runs 98 JS tests, separate 15-response historical and current-incident model replays with 14 validator controls each, and three incident-evidence replays. No network access or spending is needed, except loopback HTTP between local test processes. [Judge guide, optional checks and CI boundaries](docs/JUDGE.md).
+`npm run verify` runs 99 JS tests, separate 15-response historical and current-incident model replays with 14 validator controls each, and four incident-evidence replays. No network access or spending is needed, except loopback HTTP between local test processes. [Judge guide, optional checks and CI boundaries](docs/JUDGE.md).
 
 AI/RPC failures stop safely, unresolved fee receipts block another payment, and hostile AI drafts cannot change the checked support handoff. [Failure checks and recovery runbook](docs/FAILURE-QA.md). Historical model replays use the exact archived AI transport; they do not claim a new live evaluation of the hardened client.
 
