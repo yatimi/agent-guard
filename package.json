@@ -22,7 +22,11 @@
     "dev:live": "node --env-file-if-exists=.env scripts/serve.mjs",
     "verify": "node scripts/verify.mjs",
     "test:browser": "node scripts/test-browser.mjs",
-    "replay:incident": "node scripts/replay-incident.mjs"
+    "replay:incident": "node scripts/replay-incident.mjs",
+    "benchmark:incident": "node scripts/benchmark-incident.mjs",
+    "benchmark:incident:send": "node --env-file=.env scripts/benchmark-incident.mjs --send",
+    "benchmark:incident:replay": "node scripts/replay-incident-security.mjs",
+    "study:prepare": "node scripts/prepare-user-study.mjs"
   },
   "engines": {
     "node": ">=22.9"

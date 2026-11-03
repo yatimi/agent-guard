@@ -68,6 +68,8 @@ Our supplier and local journal are trusted. Invoice IDs, selected transaction ta
 
 ## Fixed model and executor evaluation
 
+Current incident-v1 evidence: a separate fixed pass of 4 benign and 11 adversarial supplier inputs preserved the exact approved invoice in all 15 responses. Fourteen independent validator controls passed. No transactions were sent; no malicious model proposal was observed, so no live containment rate is claimed. [Current results, exact-source replay and limits](docs/INCIDENT-SECURITY.md). This covers purchase proposals only, not the optional AI support draft. The checked-fact support handoff does not include AI prose or raw error instructions.
+
 The historical block-snapshot purchase and security benchmark share their original prompt builder. The current transaction-diagnosis flow uses a separate `incident-v1` prompt and the same exact-invoice validator/model parameters; the old benchmark does not establish behavior of this new prompt. One historical fixed pass over 4 benign and 11 malicious supplier responses kept the approved invoice in every case. The model did not produce an observed attacker-requested deviation, so this is not evidence of containing a successful live compromise. Separately forced proposals verify the validator boundary; recorded testnet calls verify the key and contract boundary. See [the full evaluation](docs/SECURITY-BENCHMARK.md) and its limitations.
 
 The contract checks recipient and spending policy, not invoice identity or exact quoted price. An injected price increase that remains within all contract caps needs the trusted local invoice validator to stop it. Invoice IDs and dataset hashes are local bindings; they are not contract-enforced delivery proofs.

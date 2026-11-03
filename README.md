@@ -24,7 +24,7 @@ AgentGuard puts spending rules in a NEAR contract. The agent gets a key that can
 - Prevents an accepted request from paying twice, including after a failed transfer.
 - Keeps administrative controls out of the agent's hands.
 
-The contract is deployed at **`guard.yatimi.testnet`**. Its deployed WASM was matched to the recorded Mac build; fresh builds have a separate provenance record. **Eight real-network checks passed**, alongside **20 Rust unit tests**, **77 JavaScript tests**, and **five isolated WASM runtime tests**. [Runtime evidence and injected-case boundaries](docs/RUNTIME-QA.md).
+The contract is deployed at **`guard.yatimi.testnet`**. Its deployed WASM was matched to the recorded Mac build; fresh builds have a separate provenance record. **Eight real-network checks passed**, alongside **20 Rust unit tests**, **86 JavaScript tests**, and **five isolated WASM runtime tests**. [Runtime evidence and injected-case boundaries](docs/RUNTIME-QA.md).
 
 [Inspect a successful payment](https://explorer.testnet.near.org/transactions/SW9ntYJ5oRY6QsDwzFdSY61Cc5WPgtSAkeJaz3umN44) · [Inspect a blocked recipient](https://explorer.testnet.near.org/transactions/3ZL2bZoLX3NoanvmfKRcCu5NxaD1ayfPfLArSCz4geFe)
 
@@ -32,11 +32,11 @@ The contract is deployed at **`guard.yatimi.testnet`**. Its deployed WASM was ma
 
 The paid workflow targets NEAR application developers handling support tickets: an agent buys a bounded diagnosis of one transaction and returns the failed execution step, native transfer outcomes, evidence and a support-response draft. A finalized trace without a failed receipt returns a free result. The diagnostic fee has its own invoice and spending limits; investigating a failure never authorizes a replacement payment.
 
-[Product decision and acceptance criteria](docs/PRODUCT.md) · [Three checked examples](docs/INCIDENT-EXAMPLES.md). The full browser purchase is [recorded and verified](docs/live-incident-purchase.json). External-user demand has not yet been validated.
+[Product decision and acceptance criteria](docs/PRODUCT.md) · [Three checked examples](docs/INCIDENT-EXAMPLES.md). The full browser purchase is [recorded and verified](docs/live-incident-purchase.json). External-user demand has not yet been validated. [Three-ticket pilot and scoring protocol](docs/USER-VALIDATION.md); prepare the anonymous materials with `npm run study:prepare`.
 
 ## Where we are
 
-A complete local paid task now works: a free lookup checks the selected transaction; NEAR AI proposes one diagnostic fee; a restricted Keychain key signs the testnet payment; the vault settles it; the executor independently fetches the receipt trace again and unlocks the checked report. The AI support draft is separate from deterministic execution facts. [Live incident purchase and recovery](docs/live-incident-purchase.json) · [Quality checks and limits](docs/INCIDENT-QA.md). Earlier block-snapshot purchases remain readable as historical evidence.
+A complete local paid task now works: a free lookup checks the selected transaction; NEAR AI proposes one diagnostic fee; a restricted Keychain key signs the testnet payment; the vault settles it; the executor independently fetches the receipt trace again and unlocks the checked report. The result highlights the next manual check and provides a copyable support handoff built from checked facts, independently of the AI draft. [Live incident purchase and recovery](docs/live-incident-purchase.json) · [Quality checks and limits](docs/INCIDENT-QA.md). Earlier block-snapshot purchases remain readable as historical evidence.
 
 The browser has two distinct surfaces: a live purchase backed by the local executor, and the original scripted security lab. The lab remains a teaching model. Preliminary model checks are recorded in [ai-smoke.json](docs/ai-smoke.json); the model resisted the injected text in that small experiment, so it is not presented as a successful model compromise.
 
@@ -62,7 +62,7 @@ Open **http://127.0.0.1:4174**. `npm run dev` starts the same safe recorded demo
 
 The demo serves only local public recordings and static assets. It recomputes incident facts from receipts, refuses live API mutations and neither imports the wallet/model clients nor reads `.env` or `.local`. Sandbox receipt hashes are not linked to public explorers. Downloads retain recorded-source provenance. Simulation and recorded evidence do not claim a fresh chain or model run.
 
-`npm run verify` runs 77 JS tests, the 15-response historical model replay with 14 validator controls, and three incident-evidence replays. No network access or spending is needed, except loopback HTTP between local test processes. [Judge guide, optional checks and CI boundaries](docs/JUDGE.md).
+`npm run verify` runs 86 JS tests, separate 15-response historical and current-incident model replays with 14 validator controls each, and three incident-evidence replays. No network access or spending is needed, except loopback HTTP between local test processes. [Judge guide, optional checks and CI boundaries](docs/JUDGE.md).
 
 Optional browser checks (installed Chrome/Chromium): `npm run test:browser`. It creates and closes its own temporary profile, tests both interfaces and stores screenshots only outside the checkout. No browser package is installed.
 
@@ -94,12 +94,16 @@ Our supplier assembles public RPC data. The demonstration fee is not evidence of
 
 ## Reproduce the security evaluation
 
+Current diagnostic purchase: `npm run benchmark:incident` and `npm run benchmark:incident:replay` need no keys or spend. A fixed live pass produced the original approved invoice on all 4 benign and 11 malicious inputs; 14 separate validator controls passed. No model compromise or blockchain transaction occurred. [Current prompt, full responses and limitations](docs/INCIDENT-SECURITY.md). An explicit live repeat with your own key is `npm run benchmark:incident:send` (at most $0.15 conservative reservation, no signing).
+
+Historical snapshot evaluation:
+
 ```sh
 npm run benchmark:security
 npm run benchmark:security:replay
 ```
 
-Both commands work without keys or spend. The first checks 14 deterministic validator controls; the second rechecks 15 historical block-snapshot model outputs against their exact prompts and source hashes. The current `incident-v1` purchase prompt is versioned separately; this historical benchmark does not measure it. In the live sample, 4/4 normal inputs produced the approved invoice, and all 11 adversarial inputs left the original invoice unchanged. No successful model compromise or model-generated chain rejection is claimed. [Cases, full results and security boundaries](docs/SECURITY-BENCHMARK.md).
+Both commands work without keys or spend. The first checks 14 deterministic validator controls; the second rechecks 15 historical block-snapshot model outputs against their exact prompts and source hashes. The current `incident-v1` purchase prompt has its own evaluation above; this historical benchmark does not measure it. In the live sample, 4/4 normal inputs produced the approved invoice, and all 11 adversarial inputs left the original invoice unchanged. No successful model compromise or model-generated chain rejection is claimed. [Cases, full results and security boundaries](docs/SECURITY-BENCHMARK.md).
 
 To repeat the live model experiment explicitly with your configured key: `npm run benchmark:security:send` (15 attempts maximum, at most $0.15 conservative reservation from the shared $1 budget, no transactions).
 

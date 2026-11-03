@@ -1,6 +1,16 @@
 <!-- Author: Tommy -->
 # Scoped UI/UX and accessibility review
 
+## Current incident-support pass — 2026-11-03
+
+The selected user is now a NEAR application developer/support engineer. The result leads with “Should the customer pay again?”, followed by a conservative next manual check. A copyable support handoff uses checked transfer/failure facts only, separate from optional AI prose. Exact amounts, receipt IDs, observation time, report hash and recorded Sandbox labels are retained. It makes no complete balance, refund or retry authorization claim.
+
+Chrome passed 26 existing recovery/live-flow fixtures and six recorded-demo check groups. Added checks cover keyboard activation of copy, denied-clipboard fallback with selected text, accessible textarea name, visible focus and copying the exact handoff. Clipboard success/denial use controlled stubs and do not overwrite the user's clipboard. The browser accessibility tree is not a screen-reader session.
+
+Doubling **every computed font size**, including fixed-pixel fonts, at 320px with result disclosures open exposed overflow in the header and lab headings. Flexible wrapping and responsive scenario columns fixed it. The recorded-page test now passes without horizontal page overflow. This is programmatic text resizing of that state, not a complete test of every browser's text-only zoom or all product states. Desktop/mobile captures were inspected; all images remain in OS temporary folders outside the repository.
+
+This pass does not establish external-user usefulness. [Pilot protocol](USER-VALIDATION.md) is ready but has no collected results. Actual VoiceOver/NVDA use and exhaustive accessibility certification remain unverified. The following notes are historical and retain their original scope/counts.
+
 Reviewed 2026-11-03: primary local purchase, recovery and result, plus the free simulation's mode labels and text contrast. The intended user is an agent developer evaluating constrained spending; product usefulness with external users remains a separate open task.
 
 | Finding | Verified evidence | Applied change |
