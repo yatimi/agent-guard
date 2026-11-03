@@ -5,6 +5,8 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { query, rpc } from './testnet-rpc.mjs';
+import { RpcClient } from '../server/rpc-client.mjs';
+import { TestnetWallet } from '../server/testnet-wallet.mjs';
 
 const execute = promisify(execFile);
 const root = new URL('../', import.meta.url);
@@ -18,30 +20,16 @@ if (!process.argv.includes('--send')) {
 const report = { network: 'testnet', mode: 'recorded-testnet-run', recordedAt: new Date().toISOString(),
   config, tests: [], statusBefore: null, statusAfter: null, wasmSha256: null };
 const stripAnsi = (value) => value.replace(/\x1b\[[0-9;]*m/g, '');
-let signedIndex = 0;
-function base64Strings(value) {
-  if (typeof value === 'string') return /^[A-Za-z0-9+/]{100,}={0,2}$/.test(value) ? [value] : [];
-  if (!value || typeof value !== 'object') return [];
-  return Object.values(value).flatMap(base64Strings);
-}
+const wallet = new TestnetWallet(config, new RpcClient('https://test.rpc.fastnear.com'), fileURLToPath(new URL('.local/', root)));
 async function cli(args) {
   try {
     const signing = args.indexOf('sign-with-keychain');
     if (signing !== -1) {
       const publicKey = args[args.indexOf('--signer-public-key') + 1];
-      const access = await query({ request_type: 'view_access_key', account_id: config.owner, public_key: publicKey, finality: 'optimistic' });
-      if (!Number.isSafeInteger(access.nonce) || !Number.isSafeInteger(access.block_height)) throw new Error('Unsafe RPC nonce or block height');
-      // CLI 0.30.1 online mode selects a full-access key even when a public key is supplied.
-      // Offline signing selects the exact Keychain entry; fresh public RPC values supply its context.
-      const signedFile = new URL(`.local/signed-${signedIndex++}.json`, root);
-      args = ['--offline', ...args.slice(0, -1), '--nonce', String(access.nonce + 1),
-        '--block-hash', access.block_hash, '--block-height', String(access.block_height), 'save-to-file', fileURLToPath(signedFile)];
-      await execute('near', args, { timeout: 30_000, maxBuffer: 2_000_000, env: { ...process.env, NO_COLOR: '1' } });
-      const signed = JSON.parse(await readFile(signedFile, 'utf8'));
-      const candidates = base64Strings(signed);
-      if (candidates.length !== 1) throw new Error(`Unexpected signed-file format: ${Object.keys(signed).join(',')}`);
-      // Offline CLI selects the exact Keychain entry; broadcasting uses no private key.
-      const response = await rpc('broadcast_tx_commit', [candidates[0]]);
+      const transactionIndex = args.indexOf('as-transaction');
+      const signed = await wallet.sign(args[transactionIndex + 2], JSON.parse(args[args.indexOf('json-args') + 1]),
+        { publicKey, receiver: args[transactionIndex + 1] });
+      const response = await rpc('broadcast_tx_commit', [signed.encoded]);
       const result = response.result;
       if (result && result.transaction.public_key !== publicKey) throw new Error('RPC signed-key mismatch');
       const hash = result?.transaction?.hash;

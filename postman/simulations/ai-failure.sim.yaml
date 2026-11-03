@@ -1,0 +1,9 @@
+# Author: Tommy
+simulation: agentguard-ai-failure
+routing: path
+mocks:
+  - name: near-ai
+    routeKey: ai
+    origin:
+      - cloud-api.near.ai
+    path: postman/mocks/near-ai/config.yaml

@@ -17,7 +17,7 @@ Assume every model response, tool result and requested payment can be malicious.
 | Forge a settlement callback | SDK `#[private]` wrapper | Real testnet receipt failure |
 | Exhaust storage through payment history | Single bounded pending record; no persistent history | Code inspection |
 
-The local browser model is intentionally not evidence of onchain enforcement. It omits cryptographic authorization, gas, storage accounting, day rollover and real asynchronous receipts. Its policy constants are example values. Recorded real-network results are a separate file and screen section. The interactive lab is not connected to Keychain or signing.
+The local browser model is intentionally not evidence of onchain enforcement. It omits cryptographic authorization, gas, storage accounting, day rollover and real asynchronous receipts. Its policy constants are example values. Recorded real-network results are a separate file and screen section. The teaching lab is not connected to Keychain or signing. The separate live purchase panel calls a loopback-only server; its restricted signer is described below.
 
 ## Trusted components
 
@@ -31,7 +31,7 @@ No agent receives either full-access key. Never put secrets in public code, brow
 ## Explicit limits
 
 - Testnet prototype, not an audit or production financial product.
-- Native NEAR transfers only. No arbitrary contract calls, FT tokens, NEAR Intents, automatic purchase fulfillment or mainnet transactions.
+- Native NEAR transfers only. No arbitrary contract calls, FT tokens, NEAR Intents, mainnet transactions or trustless purchase fulfillment.
 - A permitted supplier can still provide bad data. Allowlisting is not proof of service quality or fraud detection.
 - The agent can intentionally use its allowed budget and gas. Configure a gas allowance as well as principal caps.
 - UTC-day caps allow up to two daily budgets close to midnight. Lifetime budget remains in force.
@@ -57,3 +57,11 @@ Verify failed-transfer refunds and concurrent-payment behavior through the runti
 - [Asynchronous calls and independent failures](https://docs.near.org/smart-contracts/anatomy/crosscontract)
 - [Private callbacks](https://docs.near.org/smart-contracts/security/cross-contract-calls/callbacks)
 - [Storage cost attacks](https://docs.near.org/smart-contracts/security/storage)
+
+## Local live executor
+
+The model proposes one exact invoice; it cannot select CLI arguments, RPC endpoints, methods, gas, nonce or signing keys. The shared signer decodes the offline transaction and verifies all fields and its Ed25519 signature before any broadcast. Signed bytes are journaled before sending. A process restart or HTTP retry must reconcile the original transaction hash rather than create another payment. An unresolved older payment blocks new purchases.
+
+The server is loopback-only, requires an exact Host and Origin plus a random session token on POST, and exposes no raw CLI output, private keys or model reasoning. Browser rendering uses text nodes for model output. These controls do not protect against a malicious local process or an owner who changes server code.
+
+Our supplier and local journal are trusted. Invoice IDs and dataset hashes are bound locally; the contract does not attest delivery or independently verify data quality. The source is public mainnet RPC, while payment is testnet. A failed AI summary leaves the paid data accessible without another payment. Unknown/failed transaction outcomes require operator inspection; there is no automatic rebroadcast, cancellation or refund path.

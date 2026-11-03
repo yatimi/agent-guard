@@ -3,7 +3,7 @@
 
 Owner: `yatimi.testnet`. Vault: `guard.yatimi.testnet`. Supplier: `supplier.yatimi.testnet`. Deployment and testnet-key setup were explicitly authorized by the owner, with an overall limit of 4 testnet NEAR. No private keys are stored in this repository. Keys remain in macOS Keychain.
 
-The vault was funded with 3.4 NEAR, and the supplier was created with 0.1 NEAR. Much of the vault funding is reserved by NEAR for WASM/state storage, not transferred to a third party. The agent key has a 0.1 NEAR gas allowance, which caps gas rather than creating a separate funded account. Verification made two successful 0.01 NEAR payments while the signing/finality path was being validated. Eight checks passed in the complete recorded run.
+The vault was funded with 3.4 NEAR, and the supplier was created with 0.1 NEAR. Much of the vault funding is reserved by NEAR for WASM/state storage, not transferred to a third party. The agent key has a 0.1 NEAR gas allowance, which caps gas rather than creating a separate funded account. Initial signing/finality verification made two successful 0.01 NEAR payments. Later live-purchase and verifier runs are recorded in `docs/live-purchase.json` and the current `web/testnet-evidence.json`; do not infer cumulative spending from a single report. Eight checks passed in the complete recorded run.
 
 Public configuration: `testnet.json`. Recorded report: `web/testnet-evidence.json`. Signing is opt-in via `npm run test:testnet:send`. This document is not authorization for further deployments, mainnet use or additional funding.
 

@@ -1,0 +1,131 @@
+{
+  "mode": "live-model-testnet-purchase",
+  "verifiedAt": "2026-11-03T10:44:11.576Z",
+  "requestId": "56eba93c-f942-4c09-a79c-474a72b83902",
+  "quote": {
+    "id": "56eba93c-f942-4c09-a79c-474a72b83902",
+    "title": "NEAR Mainnet Pulse",
+    "recipient": "supplier.yatimi.testnet",
+    "amountYocto": "10000000000000000000000",
+    "network": "testnet",
+    "datasetSha256": "ac6ee8aa4463cfc39d712247e34b25f78b68ab9c3f6a05f940d33ffef1c8ea49",
+    "expiresAt": "2026-11-03T10:50:59.167Z"
+  },
+  "proof": {
+    "transactionHash": "Hssek8mVtSYuYoGjfhNt9RvDHsYT8VYoMRetBFWURbmM",
+    "nonce": "2",
+    "recipient": "supplier.yatimi.testnet",
+    "amountYocto": "10000000000000000000000",
+    "verifiedAt": "2026-11-03T10:41:06.516Z",
+    "receiptCount": 6
+  },
+  "dataset": {
+    "title": "NEAR Mainnet Pulse",
+    "network": "mainnet",
+    "observedAt": "2026-11-03T10:40:59.167Z",
+    "source": "https://free.rpc.fastnear.com",
+    "method": "Six hash-linked finalized blocks; included chunk headers only.",
+    "blocks": [
+      {
+        "height": 222858854,
+        "hash": "6NpgN8YgrbSTHahnYKY4Y1pZu5PcKjd22qN9F7G5oweh",
+        "previousHash": "6jRoazG4XxpbZYj8bhBJzuPqnH2cj7ijatfsZ1q9pHwk",
+        "timestampNanoseconds": "1793702456696476845",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "18893319723859",
+        "gasLimit": "10000000000000000"
+      },
+      {
+        "height": 222858853,
+        "hash": "6jRoazG4XxpbZYj8bhBJzuPqnH2cj7ijatfsZ1q9pHwk",
+        "previousHash": "G5HqQgdiLtfgiGY8n2ARiLXtkNeUk1Xrwpix9xuKjNcZ",
+        "timestampNanoseconds": "1793702456058851960",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "24116945374000",
+        "gasLimit": "10000000000000000"
+      },
+      {
+        "height": 222858852,
+        "hash": "G5HqQgdiLtfgiGY8n2ARiLXtkNeUk1Xrwpix9xuKjNcZ",
+        "previousHash": "5kQK7wMjsrbrL4U3QgPqKK2jHcd6aZV9F2NFwT1HZq6p",
+        "timestampNanoseconds": "1793702455409168842",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "12591075704669",
+        "gasLimit": "10000000000000000"
+      },
+      {
+        "height": 222858851,
+        "hash": "5kQK7wMjsrbrL4U3QgPqKK2jHcd6aZV9F2NFwT1HZq6p",
+        "previousHash": "3Qfs8HfQidNakz69TTMkvjiLuy83jtqX8RrqsBagodbo",
+        "timestampNanoseconds": "1793702454919794650",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "30914963622353",
+        "gasLimit": "10000000000000000"
+      },
+      {
+        "height": 222858850,
+        "hash": "3Qfs8HfQidNakz69TTMkvjiLuy83jtqX8RrqsBagodbo",
+        "previousHash": "FgbfX9CAZhhWaMHAPd26QY4uovVWWnx8zLRk16bCwvBn",
+        "timestampNanoseconds": "1793702454302908602",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "55965935456022",
+        "gasLimit": "10000000000000000"
+      },
+      {
+        "height": 222858849,
+        "hash": "FgbfX9CAZhhWaMHAPd26QY4uovVWWnx8zLRk16bCwvBn",
+        "previousHash": "ECs7fJAoTWqeUwo5gfyPNqfun3hLyo9UMW7g6LoYDWmr",
+        "timestampNanoseconds": "1793702453676743717",
+        "gasPriceYocto": "100000000",
+        "includedChunks": 10,
+        "gasUsed": "18930912180044",
+        "gasLimit": "10000000000000000"
+      }
+    ],
+    "metrics": {
+      "blocks": 6,
+      "firstHeight": 222858849,
+      "lastHeight": 222858854,
+      "meanBlockIntervalMs": 603,
+      "maxBlockIntervalMs": 649,
+      "includedChunks": 60,
+      "sampledChunkGasUsedTgas": "161",
+      "sampledChunkGasCapacityPercent": 0.26
+    },
+    "limitations": [
+      "Six blocks are a short observation window, not a trend.",
+      "Chunk-header gas is not transaction throughput or active-user count.",
+      "Public RPC data is aggregated by our demo supplier; this is not an independent commercial data vendor.",
+      "Only payment uses testnet; observations are read from mainnet."
+    ],
+    "sha256": "ac6ee8aa4463cfc39d712247e34b25f78b68ab9c3f6a05f940d33ffef1c8ea49"
+  },
+  "summary": "NEAR measurements cover six blocks (heights 222858849–222858854), a short sample window and not a trend. Mean block interval was 603 ms, with a maximum interval of 649 ms. The sample included 60 chunks, with sampled chunk gas use of 161 Tgas, representing 0.26% of sampled chunk gas capacity. Chunk gas use measures computation, not transaction counts, active users, or throughput. Data comes from aggregated public RPC via a demo supplier, not an independent commercial vendor; payment uses testnet while observations are read from mainnet. No returns or trends are inferred.",
+  "model": {
+    "name": "z-ai/glm-5.3-flash",
+    "usage": {
+      "promptTokens": 398,
+      "completionTokens": 63
+    },
+    "estimatedCostUsd": 0.00006334
+  },
+  "summaryModel": {
+    "name": "z-ai/glm-5.3-flash",
+    "usage": {
+      "promptTokens": 195,
+      "completionTokens": 134
+    },
+    "estimatedCostUsd": 0.0000826
+  },
+  "checks": [
+    "cross-origin POST denied",
+    "same request ID returns original result",
+    "resume returns original transaction",
+    "no extra model reservation during repeat/resume"
+  ]
+}

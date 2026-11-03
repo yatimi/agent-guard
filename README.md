@@ -32,13 +32,15 @@ The contract is deployed at **`guard.yatimi.testnet`**. Its published WASM match
 
 ## Where we are
 
-The contract and testnet verifier work today. The interactive browser lab runs scripted scenarios in a separate teaching model; recorded testnet results appear below it. Two preliminary live NEAR AI checks also passed: the model proposed the approved payment and kept the approved recipient in one injected-text scenario. These were proposals only, with no blockchain execution. A complete paid LLM task and browser signing are still to come. [Recorded model proposal check](docs/ai-smoke.json).
+A complete local paid task now works: NEAR AI proposes a purchase, a restricted Keychain key signs a testnet payment, the Rust vault settles it, and the supplier unlocks a hash-checked mainnet block snapshot. The agent summarizes the measurements. [Recorded end-to-end purchase](docs/live-purchase.json).
+
+The browser has two distinct surfaces: a live purchase backed by the local executor, and the original scripted security lab. The lab remains a teaching model. Preliminary model checks are recorded in [ai-smoke.json](docs/ai-smoke.json); the model resisted the injected text in that small experiment, so it is not presented as a successful model compromise.
 
 This is a testnet prototype, not an independently audited vault.
 
 ## Try the local lab
 
-Requires Node.js 22 or later. No npm dependencies or installation step.
+Requires Node.js 22.9 or later. No npm dependencies or installation step.
 
 ```sh
 npm test
@@ -54,7 +56,15 @@ Open http://127.0.0.1:4173.
 5. Pause the agent and try a valid purchase: `PAUSED`.
 6. Export JSON: the file identifies itself as `local-simulation` and includes each decision and state.
 
-Resetting the lab clears local history. No browser persistence, signing keys, external fonts, analytics or model provider are used.
+Resetting the teaching lab clears only its simulation. Live purchases are saved separately in ignored `.local/`; the browser remembers a purchase ID so refreshing reopens the same result. No signing key or model key is sent to the browser.
+
+### Run the live purchase
+
+Requires the configured testnet accounts and restricted key already in macOS Keychain, NEAR CLI, and a local `.env` containing `NEAR_AI_API_KEY`. See [TESTNET.md](TESTNET.md) for the setup boundary. Do not overwrite an existing `.env` or deploy over the owner account.
+
+Start `npm run dev`, then choose **Buy network snapshot**. One explicit purchase spends 0.01 testnet NEAR plus gas and makes up to two short model requests. The executor checks deployed code and key permissions, validates the exact invoice, verifies signed transaction bytes before broadcast, and checks FINAL receipts before unlocking data. Reopening the saved run never initiates a payment. A lost response remains unresolved until checked by its original hash.
+
+The dataset contains six linked finalized mainnet blocks, included-chunk gas and block intervals. Our supplier aggregates public RPC data; this is a workflow demonstration rather than an independent commercial feed. Six blocks cannot establish network trends, active-user counts or investment conclusions. Quote-to-payment binding is local, not an onchain delivery proof. [Local API and failure checks](docs/API.md).
 
 ## Check the AI connection
 
@@ -106,7 +116,7 @@ npm run test:testnet:send
 
 The sending command requires the configured keys already in the local macOS Keychain and consumes testnet gas. It does not create accounts, deploy contracts or replenish its budget. It saves a complete passing run to `web/testnet-evidence.json`. Partial results and signed transactions stay in ignored `.local/` files. Do not run against somebody else's deployment or change configuration to mainnet.
 
-NEAR CLI 0.30.1 online Keychain signing selects a full-access key even when `--signer-public-key` is supplied. The verifier signs offline using the exact public key, nonce and block context, then broadcasts the signed transaction through the public testnet RPC. The private key never leaves Keychain. Finalized contract state is polled before accepting settlement or pause outcomes.
+NEAR CLI 0.30.1 online Keychain signing selects a full-access key even when `--signer-public-key` is supplied. The verifier and live executor share an offline signer. It independently decodes the Borsh bytes, checks every expected field and verifies the Ed25519 signature before broadcasting the transaction through the public testnet RPC. The private key never leaves Keychain. Finalized contract state is polled before accepting settlement or pause outcomes.
 
 ## Design
 
@@ -134,7 +144,10 @@ See [SECURITY.md](SECURITY.md) for the trust boundary and limitations, and [TEST
 - `contract/src`: authoritative contract and serialized policy/payment types.
 - `contract/tests`: mocked-runtime security tests.
 - `web`: teaching model, browser interface and model tests.
-- `scripts`: loopback-only static server and explicit testnet verifier.
+- `server`: model adapter, invoice validator, restricted signer, receipt checks and saved purchase workflow.
+- `tests`: signing, invoice, settlement and restart/idempotency checks.
+- `scripts`: loopback-only server and explicit verification tools.
+- `postman`: local AI failure stand-in; no provider credentials.
 
 Uses official `near-sdk` 5.17.2, pinned in the manifest and lockfile. Browser code uses platform APIs only. No application template was used. Developed with AI coding assistance; the tests and linked testnet evidence describe what has actually been verified.
 
@@ -144,7 +157,7 @@ Uses official `near-sdk` 5.17.2, pinned in the manifest and lockfile. Browser co
 
 Built during the hackathon window, starting from an empty directory. There is no pre-hackathon application baseline. Primary track: **AI Security & Defense**.
 
-The next milestone is an agent completing a useful paid task, with both the successful purchase and an injected payment attempt visible in one demo.
+The paid vertical slice is recorded. Next: broaden adversarial evaluation, finish browser QA, package a reproducible judge demo and submit the project.
 
 ## License
 

@@ -1,0 +1,24 @@
+# Author: Tommy
+purpose:
+  stands_in_for: NEAR AI Cloud model catalog and chat completion HTTP endpoints
+  unblocks: Exercise the real AiClient against a quota failure without provider credits
+assumptions:
+  - id: caller-does-not-retry-429
+    status: supported
+    claim: AiClient makes one completion attempt and retains its reservation when this stand-in returns HTTP 429.
+    reason: The test assertion passed; the simulation log contains one catalog GET and one completion POST.
+    verification: On 2026-11-03, scripts/test-ai-failure.mjs passed against local port 4010; summary recorded one served request and one failed request.
+    source: scripts/test-ai-failure.mjs; server/ai-client.mjs; postman/mocks/near-ai/default.js
+    updated_at: '2026-11-03'
+  - id: real-provider-quota-behavior
+    status: unknown
+    claim: A real provider quota error has the exact body and timing modeled here.
+    reason: No deliberate live quota exhaustion was attempted. Client handling depends on HTTP status, not this error body's wording.
+    verification: Live successful completions are recorded separately in docs/live-purchase.json; the 429 check only establishes caller behavior under the stand-in.
+    source: https://docs.near.ai/cloud
+    updated_at: '2026-11-03'
+fingerprints:
+  - id: local-2026-11-03
+    date: '2026-11-03'
+    commit: null
+    cli: '1.73.0'

@@ -1,0 +1,23 @@
+/* Author: Tommy */
+.live-purchase { margin: 0 0 42px; padding: 30px; border: 1px solid var(--line, #d1d9cd); border-radius: 18px; background: #f2f6ee; }
+.live-title { display: flex; justify-content: space-between; align-items: start; gap: 24px; }
+.live-title h2 { margin: 8px 0 12px; font-size: clamp(25px, 3vw, 36px); letter-spacing: -1px; }
+.live-title p { max-width: 640px; line-height: 1.6; }
+.live-title .pill { white-space: nowrap; }
+.live-actions { display: flex; align-items: center; gap: 16px; margin: 20px 0; flex-wrap: wrap; }
+.live-actions select { padding: 14px; border: 1px solid #b8c6ae; background: white; border-radius: 9px; font: inherit; }
+.live-actions .primary { width: auto; min-width: 250px; margin: 0; }
+.live-actions button:disabled { opacity: .55; cursor: wait; }
+.live-status { display: block; font-weight: 600; margin: 18px 0; overflow-wrap: anywhere; }
+.live-events { display: grid; gap: 12px; padding-left: 24px; font-size: 13px; line-height: 1.6; }
+.live-result { border-top: 1px solid #cbd6c1; padding-top: 20px; margin-top: 20px; overflow-wrap: anywhere; line-height: 1.6; }
+.live-result:empty { display: none; }
+.live-result h3 { font-size: 25px; margin: 20px 0 10px; }
+.live-result ul { padding-left: 22px; font-size: 13px; }
+.live-result a { text-decoration: underline; text-underline-offset: 3px; }
+.live-result .text-button { margin-top: 20px; }
+.live-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 24px 0; }
+.live-metrics div { padding: 16px; border: 1px solid #cbd6c1; border-radius: 10px; background: #fff; }
+.live-metrics dt { font-size: 12px; color: #4e5c46; }
+.live-metrics dd { margin: 8px 0 0; font-size: 24px; font-weight: 600; }
+@media (max-width: 760px) { .live-purchase { padding: 20px; } .live-title { display: block; } .live-metrics { grid-template-columns: repeat(2, 1fr); } .live-actions .primary, .live-actions select { width: 100%; } }
